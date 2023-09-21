@@ -4,6 +4,7 @@ import User from "../pages/user.vue";
 import Search from "../pages/search.vue";
 import Edit from "../pages/edit.vue";
 import SearchResult from "../pages/searchResult.vue";
+import UserLogin from "../pages/userLogin.vue";
 
 const routes = [
     { path: '/', component: Index },
@@ -12,6 +13,7 @@ const routes = [
     { path: '/search', component: Search },
     { path: '/user/edit', component: Edit },
     { path: '/user/list', component: SearchResult },
+    { path: '/user/login', component: UserLogin },
 
 ]
 

@@ -1,0 +1,40 @@
+<script setup lang="ts">
+import {userType} from "../models/user";
+
+interface UserCardListProps{
+  loading: boolean;
+  userList: userType[];
+}
+const props = withDefaults(defineProps<UserCardListProps>(),{
+  loading: true,
+  // @ts-ignore
+  userList: [],
+})
+
+
+
+</script>
+
+<template>
+  <van-card
+      v-for="user in props.userList"
+      :desc="user.profile"
+      :title="user.nickname"
+      :thumb="user.profilePhoto"
+      :tag="user.sex === 1?'男':'女'"
+  >
+
+    <template #tags>
+      <van-tag plain type="danger" v-for="tag in user.tags" style="margin-right: 8px; margin-top: 8px">
+        {{ tag }}
+      </van-tag>
+    </template>
+    <template #footer>
+      <van-button size="mini">联系我</van-button>
+    </template>
+  </van-card>
+</template>
+
+<style scoped>
+
+</style>
