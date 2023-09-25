@@ -3,12 +3,16 @@ import {useRoute} from "vue-router";
 import {ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
+import loading = Toast.loading;
 
 const route = useRoute()
+
+const isLoading = ref(false)
 
 const loginAccount = ref('');
 const loginPassword = ref('');
 const onSubmit = async () => {
+  isLoading.value = true;
   const res = await myAxios.post('/user/login',{
     loginAccount: loginAccount.value,
     loginPassword: loginPassword.value,
@@ -19,6 +23,7 @@ const onSubmit = async () => {
 
   }else {
     Toast.fail("登陆失败");
+    isLoading.value = false;
   }
 };
 </script>
@@ -43,9 +48,10 @@ const onSubmit = async () => {
       />
     </van-cell-group>
     <div style="margin: 16px;">
-      <van-button round block type="primary" native-type="submit">
-        提交
+      <van-button  :loading="isLoading"  loading-text="登录中........" color="linear-gradient(to right, #4bb0ff, #6149f6)" block round  type="primary" native-type="submit">
+        登录
       </van-button>
+
     </div>
   </van-form>
 

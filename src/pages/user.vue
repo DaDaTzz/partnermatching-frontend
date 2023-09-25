@@ -40,8 +40,8 @@
 
 <template>
     <van-cell-group>
-      <van-cell title="当前用户" :value="user?.nickname"/>
-      <van-cell title="修改信息" is-link to="/user/update" />
+      <van-cell title="用户" :value="user?.nickname"/>
+      <van-cell title="个人信息" is-link to="/user/update" />
       <van-cell title="已创建队伍" is-link to="/user/team/create" />
       <van-cell title="已加入队伍" is-link to="/user/team/join" />
     </van-cell-group>
