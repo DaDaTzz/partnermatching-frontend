@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import {useRouter} from "vue-router";
+import {useRoute} from "vue-router";
 import {ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
 
-const router = useRouter()
+const route = useRoute()
 
 const loginAccount = ref('');
 const loginPassword = ref('');
@@ -13,11 +13,10 @@ const onSubmit = async () => {
     loginAccount: loginAccount.value,
     loginPassword: loginPassword.value,
   })
-  console.log(res,'用户登录')
-  if(res.data.code === 200 && res.data){
-    console.log(res.data.code)
+  if(res.data.code === 200 && res.data.data){
     Toast.success("登录成功");
-    router.replace('/')
+    window.location.href = "/";
+
   }else {
     Toast.fail("登陆失败");
   }

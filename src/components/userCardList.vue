@@ -16,8 +16,8 @@ const props = withDefaults(defineProps<UserCardListProps>(),{
 </script>
 
 <template>
+  <van-skeleton title avatar :row="3" :loading="props.loading" v-for="user in props.userList">
   <van-card
-      v-for="user in props.userList"
       :desc="user.profile"
       :title="user.nickname"
       :thumb="user.profilePhoto"
@@ -33,6 +33,7 @@ const props = withDefaults(defineProps<UserCardListProps>(),{
       <van-button size="mini">联系我</van-button>
     </template>
   </van-card>
+  </van-skeleton>
 </template>
 
 <style scoped>

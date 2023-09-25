@@ -28,6 +28,7 @@ import {getCurrentUser} from "../services/user.ts";
      })
      if(res.data.code === 200 && res.data.data === true){
        Toast.success("修改成功");
+       window.location.reload();
        router.back();
      }else{
        Toast.fail("修改失败");

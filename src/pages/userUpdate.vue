@@ -35,16 +35,21 @@
   }
 
 
-
 </script>
 
 <template>
-    <van-cell-group>
-      <van-cell title="当前用户" :value="user?.nickname"/>
-      <van-cell title="修改信息" is-link to="/user/update" />
-      <van-cell title="已创建队伍" is-link to="/user/team/create" />
-      <van-cell title="已加入队伍" is-link to="/user/team/join" />
-    </van-cell-group>
+  <template v-if="user">
+    <van-cell title="昵称" is-link :value="user.nickname" @click="toEdit('nickname',user.nickname)"/>
+    <van-cell title="账号" is-link :value="user.loginAccount" />
+    <van-cell title="头像" is-link to="/user/edit" >
+      <img style="height: 48px" :src="user.profilePhoto" />
+    </van-cell>
+    <van-cell title="性别" is-link :value="user.sex === 1?'男':'女'" @click="toEdit('sex',user.sex)"/>
+    <van-cell title="电话" is-link  :value="user.phone" @click="toEdit('phone',user.phone)"/>
+    <van-cell title="邮箱" is-link  :value="user.email" @click="toEdit('email',user.email)"/>
+    <van-cell title="注册时间"  :value="user.createTime" />
+  </template>
+
 </template>
 
 <style scoped>

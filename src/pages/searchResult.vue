@@ -23,7 +23,6 @@ onMounted(async () => {
   })
       .then(function (response) {
         console.log('/user/search/tags success', response);
-        Toast.success("响应成功");
         return response.data?.data;
       })
       .catch(function (error) {
