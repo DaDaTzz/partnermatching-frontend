@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import {onMounted, ref} from "vue";
 import {Toast} from "vant";
 import {useRoute, useRouter} from "vue-router";

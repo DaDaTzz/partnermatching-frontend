@@ -9,4 +9,7 @@ export default {
       resolvers: [VantResolver()],
     }),
   ],
+  // server: {
+  //   port: 3000
+  // },
 };
