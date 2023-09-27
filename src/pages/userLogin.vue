@@ -20,7 +20,6 @@ const onSubmit = async () => {
   if(res.data.code === 200 && res.data.data){
     Toast.success("登录成功");
     window.location.href = "/";
-
   }else {
     Toast.fail("登陆失败");
     isLoading.value = false;
