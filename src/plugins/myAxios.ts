@@ -5,8 +5,8 @@ import { useRouter} from "vue-router";
 const router = useRouter()
 
 const myAxios = axios.create({
-    baseURL:'http://8.130.133.165:8080',
-    //baseURL: 'http://localhost:8080',
+    //baseURL:'http://8.130.133.165:8080',
+    baseURL: 'http://localhost:8080',
 });
 
 myAxios.defaults.withCredentials = true;
