@@ -28,7 +28,7 @@ const onSubmit = async () => {
 <template>
   <van-notice-bar
       left-icon="volume-o"
-      text="todo：好友功能。。。聊天功能。。。自定义标签。。。图片上传（修改头像）。。。"
+      text="TODO：自定义标签功能。。。好友功能。。。聊天功能。。。图片上传（修改头像）。。。"
   />
   <van-form @submit="onSubmit">
     <van-cell-group inset>
