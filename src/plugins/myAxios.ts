@@ -5,8 +5,8 @@ import { useRouter} from "vue-router";
 const router = useRouter()
 
 const myAxios = axios.create({
-    //baseURL:'http://8.130.133.165:8080',
-    baseURL: 'http://localhost:8080',
+    baseURL:'http://8.130.133.165:8080',
+    //baseURL: 'http://localhost:8080',
 });
 
 myAxios.defaults.withCredentials = true;
@@ -26,7 +26,7 @@ myAxios.interceptors.request.use(function (config) {
 // 添加响应拦截器
 myAxios.interceptors.response.use(function (response) {
     //跳转到登录页
-    if(response?.data.code === 40003){
+    if(response?.data.code === 40003 || response?.data.code === 40006){
         // const redirectUrl = window.location.href;
         window.location.href = '/user/login'
     }

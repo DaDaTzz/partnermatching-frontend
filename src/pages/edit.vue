@@ -39,12 +39,7 @@ const fileList2 = [];
      }
    };
 
-/**
- * 上传图片
- */
-const imgSubmit = () =>{
 
-}
 
 
 </script>

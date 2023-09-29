@@ -2,6 +2,8 @@
   import {useRouter} from "vue-router";
   import {onMounted, ref} from "vue";
   import {getCurrentUser} from "../services/user.ts";
+  import myAxios from "../plugins/myAxios.ts";
+  import {Toast} from "vant";
 
   /*const user = {
     id:1,
@@ -22,6 +24,17 @@
     user.value = await getCurrentUser();
   })
 
+  const doLogout = async () =>{
+      const res = await myAxios.post("/user/logout");
+      if(res.data.code === 200){
+        localStorage.setItem("token",'');
+        Toast.success("注销成功");
+        window.location.reload();
+      }else {
+        Toast.fail('注销失败' + (res.data.description ? `，${res.data.description}`: ''));
+      }
+  }
+
 
 </script>
 
@@ -32,6 +45,8 @@
       <van-cell title="已创建队伍" is-link to="/user/team/create" />
       <van-cell title="已加入队伍" is-link to="/user/team/join" />
     </van-cell-group>
+  <van-button size="small" type="primary" plain @click="doLogout">注销</van-button>
+
 </template>
 
 <style scoped>
