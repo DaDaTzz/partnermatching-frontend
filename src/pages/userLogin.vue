@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import {useRoute} from "vue-router";
 import {ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
-import loading = Toast.loading;
 
-const route = useRoute()
 
 const isLoading = ref(false)
 
@@ -18,6 +15,7 @@ const onSubmit = async () => {
     loginPassword: loginPassword.value,
   })
   if(res.data.code === 200 && res.data.data){
+    localStorage.setItem('token',res.data.message)
     Toast.success("登录成功");
     window.location.href = "/";
   }else {
@@ -28,13 +26,17 @@ const onSubmit = async () => {
 </script>
 
 <template>
+  <van-notice-bar
+      left-icon="volume-o"
+      text="todo：好友功能。。。聊天功能。。。自定义标签。。。图片上传（修改头像）。。。"
+  />
   <van-form @submit="onSubmit">
     <van-cell-group inset>
       <van-field
           v-model="loginAccount"
           name="loginAccount"
           label="账号"
-          placeholder="请填写账号"
+          placeholder="账号：dadada"
           :rules="[{ required: true, message: '请填写账号' }]"
       />
       <van-field
@@ -42,7 +44,7 @@ const onSubmit = async () => {
           type="password"
           name="loginPassword"
           label="密码"
-          placeholder="请输入密码"
+          placeholder="密码：12345678"
           :rules="[{ required: true, message: '请填写密码' }]"
       />
     </van-cell-group>
@@ -50,8 +52,13 @@ const onSubmit = async () => {
       <van-button  :loading="isLoading"  loading-text="登录中........" color="linear-gradient(to right, #4bb0ff, #6149f6)" block round  type="primary" native-type="submit">
         登录
       </van-button>
+      <van-button to="/user/register" color="linear-gradient(to right, #4bb0ff, #6149f6)" block round  type="primary" native-type="submit">
+        注册
+      </van-button>
 
     </div>
+
+    <van-divider dashed style="margin-top: 300px">author:Da</van-divider>
   </van-form>
 
 

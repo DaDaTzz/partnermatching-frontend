@@ -117,11 +117,8 @@ const doDisbandTeam = async (id: number, password:string) =>{
         </van-tag>
       </template>
       <template #bottom>
-        <div>
-          {{ "可加入人数：" + team.maxNum }}
-        </div>
         <div :style="[ team.maxNum === team.hasJoinNum ? { color: 'red' } : { color: '' } ]">
-          {{ "已加入人数：" + team.hasJoinNum }}
+          {{ "队伍人数：" + team.hasJoinNum + "/" + team.maxNum }} <br>
         </div>
         <div v-if="team.expireTime">
           {{ "过期时间：" + team.expireTime }}

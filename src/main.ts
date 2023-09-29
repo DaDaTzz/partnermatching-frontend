@@ -7,6 +7,8 @@ import '../global.css'
 import { Dialog } from 'vant';
 import { Field, CellGroup } from 'vant';
 
+
+
 const app = createApp(App)
 app.use(Vant)
 app.use(Dialog)

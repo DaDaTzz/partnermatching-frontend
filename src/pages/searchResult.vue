@@ -1,16 +1,26 @@
+<template>
+<!--  <user-card-list :user-list="userList"  />-->
+  <user-card-list :user-list="userList" :loading="loading"/>
+  <van-empty v-if="!userList || userList.length < 1" description="搜索结果为空！" />
+
+</template>
+
 <script setup lang="ts">
+import {onMounted, ref} from 'vue';
 import {useRoute} from "vue-router";
-import {onMounted, ref} from "vue";
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../plugins/myAxios";
 import {Toast} from "vant";
-import qs from "qs";
+import qs from 'qs';
 import UserCardList from "../components/userCardList.vue";
 
+
 const route = useRoute();
-
 const {tags} = route.query;
+const loading = ref(true)
 
-const userList = ref([])
+const userList = ref([]);
+
+
 
 onMounted(async () => {
   const userListData = await myAxios.get('/user/search/tags', {
@@ -22,14 +32,14 @@ onMounted(async () => {
     }
   })
       .then(function (response) {
-        console.log('/user/search/tags success', response);
-        return response.data?.data;
+        console.log('/user/search/tags succeed', response);
+        return response?.data.data;
       })
       .catch(function (error) {
-        console.log('/user/search/tags error', error);
-        Toast.fail("响应失败");
+        console.error('/user/search/tags error', error);
+        Toast.fail('请求失败');
       })
-
+  console.log(userListData)
   if (userListData) {
     userListData.forEach(user => {
       if (user.tags) {
@@ -38,30 +48,27 @@ onMounted(async () => {
     })
     userList.value = userListData;
   }
+  loading.value = false;
 })
 
 
 // const mockUser = {
-//   id:1,
-//   nickname:'秋雨',
-//   loginAccount:"123",
-//   loginPassword:"13456",
-//   sex:"男",
-//   phone:"1666666",
-//   email:"123@qq.com",
-//   profilePhoto:"https://z1.ax1x.com/2023/06/11/pCVNPyD.jpg",
-//   tags:['JAVA语言','emo','大一','打工中'],
-//   profile:"我是一名程序员，O(∩_∩)O哈哈~",
-//   createTime:new Date(),
+//   id: 12345,
+//   username: 'dadada',
+//   userAccount: '12314',
+//   profile: '阿巴阿巴阿巴',
+//   avatarUrl: '',
+//   gender: 0,
+//   phone: '13113113111',
+//   email: '592342721987@xzcxcz.com',
+//   userRole: 0,
+//   planetCode: '1234',
+//   tags: ['java', 'emo', '打工中', 'emo', '打工中'],
+//   createTime: new Date(),
 // }
 
 
 </script>
-
-<template>
-  <user-card-list :user-list="userList"/>
-  <van-empty v-if="!userList || userList.length < 1" description="搜索结果为空" />
-</template>
 
 <style scoped>
 

@@ -20,6 +20,12 @@
 
   onMounted(async () => {
     user.value = await getCurrentUser();
+    if(user.value.sex === 1){
+      user.value.sex = '男'
+    }
+    if(user.value.sex === 0){
+      user.value.sex = '女'
+    }
   })
 
   const router = useRouter();
@@ -39,12 +45,12 @@
 
 <template>
   <template v-if="user">
-    <van-cell title="昵称" is-link :value="user.nickname" @click="toEdit('nickname',user.nickname)"/>
     <van-cell title="账号" is-link :value="user.loginAccount" />
-    <van-cell title="头像" is-link to="/user/edit" >
+    <van-cell title="昵称" is-link :value="user.nickname" @click="toEdit('nickname',user.nickname)"/>
+    <van-cell title="头像" is-link @click="toEdit('profilePhoto',user.profilePhoto)">
       <img style="height: 48px" :src="user.profilePhoto" />
     </van-cell>
-    <van-cell title="性别" is-link :value="user.sex === 1?'男':'女'" @click="toEdit('sex',user.sex)"/>
+    <van-cell title="性别" is-link :value="user.sex" @click="toEdit('sex',user.sex)"/>
     <van-cell title="电话" is-link  :value="user.phone" @click="toEdit('phone',user.phone)"/>
     <van-cell title="邮箱" is-link  :value="user.email" @click="toEdit('email',user.email)"/>
     <van-cell title="注册时间"  :value="user.createTime" />

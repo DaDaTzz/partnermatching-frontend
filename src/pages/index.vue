@@ -26,7 +26,7 @@ const loadData = async () => {
 
   // 匹配模式，根据标签匹配用户
   if(isMatchMode.value){
-    const num = 10;
+    const num = 20;
     userListData = await myAxios.get('/user/match', {
       params: {
         num,
@@ -44,7 +44,7 @@ const loadData = async () => {
     // 普通模式，直接分页查询用户
     userListData = await myAxios.get('/user/recommend', {
       params: {
-        pageSize:8,
+        pageSize:50,
         pageNum:1,
       },
     })
@@ -80,7 +80,7 @@ watchEffect(() =>{
 </script>
 
 <template>
-  <van-cell center title="开启伙伴匹配">
+  <van-cell center title="开启伙伴匹配" style="color: #1989fa">
     <template #right-icon>
       <van-switch v-model="isMatchMode" size="24" />
     </template>

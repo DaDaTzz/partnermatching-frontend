@@ -22,19 +22,6 @@
     user.value = await getCurrentUser();
   })
 
-  const router = useRouter();
-
-  const toEdit = (editKey:string, currentValue:string) => {
-    router.push({
-      path:'/user/edit',
-      query:{
-        editKey,
-        currentValue
-      }
-    })
-  }
-
-
 
 </script>
 

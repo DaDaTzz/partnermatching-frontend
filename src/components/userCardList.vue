@@ -8,8 +8,9 @@ interface UserCardListProps{
 const props = withDefaults(defineProps<UserCardListProps>(),{
   loading: true,
   // @ts-ignore
-  userList: [],
+  userList: [] as userType[],
 })
+
 
 
 

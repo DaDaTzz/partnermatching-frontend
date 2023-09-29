@@ -14,6 +14,10 @@ import {getCurrentUser} from "../services/user.ts";
      editName: route.query.editName,
    })
 
+const imageAccept = "/jpg,/png";
+const fileList2 = [];
+
+
    const onSubmit = async () => {
      const currentUser = await getCurrentUser();
 
@@ -31,21 +35,38 @@ import {getCurrentUser} from "../services/user.ts";
        window.location.reload();
        router.back();
      }else{
-       Toast.fail("修改失败");
+       Toast.fail("修改失败" );
      }
    };
+
+/**
+ * 上传图片
+ */
+const imgSubmit = () =>{
+
+}
 
 
 </script>
 
 <template>
   <van-form @submit="onSubmit">
+    <div v-if="editUser.editKey === 'sex'">
+      <van-radio-group v-model="editUser.currentValue" direction="horizontal">
+        <van-radio name="1">男</van-radio>
+        <van-radio name="0">女</van-radio>
+      </van-radio-group>
+    </div>
+
+    <div v-if="editUser.editKey !== 'sex' " >
       <van-field
           v-model="editUser.currentValue"
           :name="editUser.editKey"
           :label="editUser.editName"
           :placeholder="`请输入${editUser.editName}`"
       />
+    </div>
+
   <div style="margin: 16px;">
     <van-button round block type="primary" native-type="submit">
       提交
