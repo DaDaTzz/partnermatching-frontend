@@ -63,6 +63,7 @@
     <van-cell title="性别" is-link :value="user.sex" @click="toEdit('sex',user.sex)"/>
     <van-cell title="电话" is-link  :value="user.phone" @click="toEdit('phone',user.phone)"/>
     <van-cell title="邮箱" is-link  :value="user.email" @click="toEdit('email',user.email)"/>
+    <van-cell title="个人简介" is-link  :value="user.profile" @click="toEdit('profile',user.profile)"/>
     <van-cell title="注册时间"  :value="user.createTime" />
   </template>
 
