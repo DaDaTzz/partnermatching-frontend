@@ -1,9 +1,4 @@
-<template>
-<!--  <user-card-list :user-list="userList"  />-->
-  <user-card-list :user-list="userList" :loading="loading"/>
-  <van-empty v-if="!userList || userList.length < 1" description="搜索结果为空！" />
 
-</template>
 
 <script setup lang="ts">
 import {onMounted, ref} from 'vue';
@@ -16,14 +11,16 @@ import UserCardList from "../components/userCardList.vue";
 
 const route = useRoute();
 const {tags} = route.query;
-const loading = ref(true)
 
 const userList = ref([]);
 
-
+const loading = ref(true)
 
 onMounted(async () => {
-  const userListData = await myAxios.get('/user/search/tags', {
+  let userListData;
+  loading.value = true;
+
+  userListData = await myAxios.get('/user/search/tags', {
     params: {
       tagNameList: tags
     },
@@ -52,6 +49,7 @@ onMounted(async () => {
 })
 
 
+
 // const mockUser = {
 //   id: 12345,
 //   username: 'dadada',
@@ -69,6 +67,13 @@ onMounted(async () => {
 
 
 </script>
+
+<template>
+  <!--  <user-card-list :user-list="userList"  />-->
+  <user-card-list :user-list="userList" :loading="loading"/>
+  <van-empty v-if="!userList || userList.length < 1" description="搜索结果为空！" />
+
+</template>
 
 <style scoped>
 
