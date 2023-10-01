@@ -12,6 +12,8 @@ import UserTeamJoin from "../pages/userTeamJoin.vue";
 import UserTeamCreate from "../pages/userTeamCreate.vue";
 import UserRegister from "../pages/userRegister.vue";
 import Friend from "../pages/Friend.vue";
+import UpdateTag from "../pages/updateTag.vue";
+
 
 const routes = [
     {path: '/', component: Index},
@@ -25,9 +27,11 @@ const routes = [
     {path: '/user/list', title:'用户列表', component: SearchResult},
     {path: '/user/login', title:"伙伴匹配系统", component: UserLogin},
     {path: '/user/update', title:'更新信息', component: UserUpdate},
+    {path: '/user/updateTag', title:'更新标签', component: UpdateTag},
     {path: '/user/team/join', title:'我加入的队伍', component: UserTeamJoin},
     {path: '/user/team/create', title:'我创建的队伍',component: UserTeamCreate},
     {path: '/friend', title:'好友列表', component: Friend},
+
 
 
 
