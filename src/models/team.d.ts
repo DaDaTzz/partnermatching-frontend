@@ -10,13 +10,14 @@ export type teamType = {
     expireTime?: Date;
     maxNum: number;
     password?: string;
+    profilePhoto?:string;
     states: number;
     createTime: Date;
     updateTime: Date;
     // 创建人
-    createUser?: userType;
+    createUser: userType;
     // 已加入用户
-    joinUsers?:userType[];
+    joinUsers:userType[];
     // 已加入人数
     hasJoinNum:number;
 };

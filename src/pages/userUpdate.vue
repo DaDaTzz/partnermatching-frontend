@@ -4,8 +4,6 @@ import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
 
 
-
-
 /*const user = {
   id:1,
   nickname:'da',
@@ -23,61 +21,71 @@ const user = ref();
 
 onMounted(async () => {
   user.value = await getCurrentUser();
-  if (user.value.sex === 1) {
-    user.value.sex = '男'
+  if(user.value.tags){
+    user.value.tags = JSON.parse(user.value.tags)
   }
-  if (user.value.sex === 0) {
-    user.value.sex = '女'
-  }
-
 })
 
 const router = useRouter();
 
-const toEdit = (editKey: string, currentValue: string) => {
+const toEdit = (editKey: string, editName: string, currentValue: string) => {
   router.push({
     path: '/user/edit',
     query: {
       editKey,
-      currentValue
+      editName,
+      currentValue,
     }
   })
 }
 
-const toUpdateTag = () => {
+const toEditMsg = (currentValue: string) => {
   router.push({
-    path: '/user/updateTag',
+    path: '/upload/msg',
+    query: {
+      currentValue,
+    }
   })
 }
+
+const toUpdateTag = (currentValue: string) => {
+  router.push({
+    path: '/user/updateTag',
+    query: {
+      currentValue,
+    }
+  })
+}
+
+
 
 
 </script>
 
 <template>
   <template v-if="user">
-      <div style="text-align: center">
-        <van-image
-            @click="toEdit('profilePhoto',user.profilePhoto)"
-            round
-            fit="cover"
-            width="10rem"
-            height="10rem"
-            :src="user.profilePhoto"/>
-      </div>
+    <div style="text-align: center">
+      <van-image
+          title="头像"
+          @click="toEditMsg(user.profilePhoto)"
+          round
+          fit="cover"
+          width="10rem"
+          height="10rem"
+          :src="user.profilePhoto"/>
+    </div>
 
     <van-cell title="账号" is-link :value="user.loginAccount"/>
-    <van-cell title="昵称" is-link :value="user.nickname" @click="toEdit('nickname',user.nickname)"/>
-
-    <!--    <van-cell title="头像" is-link @click="toEdit('profilePhoto',user.profilePhoto)">-->
-    <!--      <img style="height: 48px" :src="user.profilePhoto" />-->
-    <!--    </van-cell>-->
-    <van-cell title="性别" is-link :value="user.sex" @click="toEdit('sex',user.sex)"/>
-    <van-cell title="电话" is-link :value="user.phone" @click="toEdit('phone',user.phone)"/>
-    <van-cell title="邮箱" is-link :value="user.email" @click="toEdit('email',user.email)"/>
-    <van-cell title="标签" is-link :value="user.tags" @click="toUpdateTag"/>
-
-    <van-cell title="个人简介" is-link :value="user.profile" @click="toEdit('profile',user.profile)"/>
-    <van-cell title="注册时间" :value="user.createTime"/>
+    <van-cell title="昵称" is-link :value="user.nickname" @click="toEdit('nickname','昵称', user.nickname)"/>
+    <van-cell title="性别" is-link :value="user.sex === '1' ? '男':'女'" @click="toEdit('sex','性别', user.sex)"/>
+    <van-cell title="电话" is-link :value="user.phone" @click="toEdit('phone','电话', user.phone)"/>
+    <van-cell title="邮箱" is-link :value="user.email" @click="toEdit('email','邮箱', user.email)"/>
+    <van-cell title="标签" is-link @click="toUpdateTag(user.tags)">
+      <van-tag plain type="danger" v-for="tag in user.tags" style="margin-right: 8px; margin-top: 8px">
+        {{ tag }}
+      </van-tag>
+    </van-cell>
+    <van-cell title="个人简介" is-link :value="user.profile" @click="toEdit('profile','简介',user.profile)"/>
   </template>
 
 </template>

@@ -99,14 +99,26 @@ const doDisbandTeam = async (id: number, password:string) =>{
   }
 }
 
+/**
+ * 跳转队伍详情页
+ */
+
+const teamInfo = (team)=>{
+  router.push({
+    path:'/team/info',
+    query:team,
+  })
+}
+
 
 </script>
 
 <template>
   <div id="teamCardList">
     <van-card
+        @click="teamInfo(team)"
         v-for="team in props.teamList"
-        :thumb="teamLogo"
+        :thumb="team.profilePhoto"
         :desc="team.description"
         :title="team.name"
     >
@@ -120,18 +132,13 @@ const doDisbandTeam = async (id: number, password:string) =>{
         <div :style="[ team.maxNum === team.hasJoinNum ? { color: 'red' } : { color: '' } ]">
           {{ "队伍人数：" + team.hasJoinNum + "/" + team.maxNum }} <br>
         </div>
-        <div v-if="team.expireTime">
-          {{ "过期时间：" + team.expireTime }}
-        </div>
-        <div>
-          {{ "创建时间：" + team.createTime }}
-        </div>
+
       </template>
-      <template #footer>
-        <van-button v-if="team.userId !== currentUser?.id && !team.hasJoin" size="small" type="primary" plain @click="doJoinTeam(team)">加入队伍</van-button>
-        <van-button v-if="team.userId === currentUser?.id" size="small"  plain @click="doUpdateTeam(team.id)">更新队伍</van-button>
-        <van-button v-if="team.userId !== currentUser?.id && team.hasJoin" size="small"  plain @click="doExitTeam(team.id)">退出队伍</van-button>
-        <van-button v-if="team.userId === currentUser?.id" size="small"  type="danger" plain @click="doDisbandTeam(team.id)">解散队伍</van-button>
+      <template #footer >
+        <van-button v-if="team.userId !== currentUser?.id && !team.hasJoin" size="small" type="primary" plain @click.stop="doJoinTeam(team)">加入队伍</van-button>
+        <van-button v-if="team.userId === currentUser?.id" size="small"  plain @click.stop="doUpdateTeam(team.id)">更新队伍</van-button>
+        <van-button v-if="team.userId !== currentUser?.id && team.hasJoin" size="small"  plain @click.stop="doExitTeam(team.id)">退出队伍</van-button>
+        <van-button v-if="team.userId === currentUser?.id" size="small"  type="danger" plain @click.stop="doDisbandTeam(team.id)">解散队伍</van-button>
       </template>
     </van-card>
   </div>

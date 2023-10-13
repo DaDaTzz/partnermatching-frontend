@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
-import {onMounted, ref} from "vue";
+import { ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
 import {getCurrentUser} from "../services/user.ts";
@@ -14,8 +14,6 @@ const editUser = ref({
   editName: route.query.editName,
 })
 
-const imageAccept = "/jpg,/png";
-const fileList2 = [];
 
 
 const onSubmit = async () => {
@@ -44,14 +42,7 @@ const onSubmit = async () => {
 
 <template>
   <van-form @submit="onSubmit">
-    <div v-if="editUser.editKey === 'sex'">
-      <van-radio-group v-model="editUser.currentValue" direction="horizontal">
-        <van-radio name="1">男</van-radio>
-        <van-radio name="0">女</van-radio>
-      </van-radio-group>
-    </div>
-
-    <div v-if="editUser.editKey !== 'sex' ">
+    <div v-if="editUser.editName !== '性别' ">
       <van-field
           v-model="editUser.currentValue"
           :name="editUser.editKey"
@@ -59,7 +50,12 @@ const onSubmit = async () => {
           :placeholder="`请输入${editUser.editName}`"
       />
     </div>
-
+    <div v-if="editUser.editName === '性别'">
+      <van-radio-group v-model="editUser.currentValue" direction="horizontal">
+        <van-radio name="1">男</van-radio>
+        <van-radio name="0">女</van-radio>
+      </van-radio-group>
+    </div>
     <div style="margin: 16px;">
       <van-button round block type="primary" native-type="submit">
         提交

@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
 
-const router = useRouter()
 const searchText = ref('');
+const route = useRoute()
+
+
+console.log()
 
 
 const originTagList = [
@@ -62,9 +65,8 @@ let tagList = ref(originTagList);
 
 /**
  * 搜索过滤
- * @param val
  */
-const onSearch = (val) => {
+const onSearch = () => {
   tagList.value = originTagList.map(parentTag => {
     const tempChildren = [...parentTag.children];
     const tempParentTag = {...parentTag}
@@ -80,6 +82,7 @@ const onCancel = () => {
 
 const activeId = ref([]);
 const activeIndex = ref(0);
+
 
 
 /**

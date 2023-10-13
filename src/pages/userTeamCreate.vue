@@ -46,7 +46,7 @@ const onSearch = (val) => {
   <div id="team"></div>
   <van-search v-model="searchText" placeholder="搜索队伍" @search="onSearch"/>
   <team-card-list :teamList="teamList" :myJoinTeamList="myJoinTeamList"/>
-  <van-empty v-if="!teamList || teamList.length < 1" description="暂无队伍信息" />
+  <van-empty v-if="!teamList || teamList.length < 1" description="没有更多了" />
 </template>
 
 <style scoped>

@@ -26,44 +26,42 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <van-notice-bar
-      left-icon="volume-o"
-      text="TODO：自定义标签功能。。。好友功能。。。聊天功能。。。图片上传（修改头像）。。。"
-  />
-  <van-form @submit="onSubmit">
-    <van-cell-group inset>
-      <van-field
-          v-model="loginAccount"
-          name="loginAccount"
-          label="账号"
-          placeholder="账号：dadada"
-          :rules="[{ required: true, message: '请填写账号' }]"
-      />
-      <van-field
-          v-model="loginPassword"
-          type="password"
-          name="loginPassword"
-          label="密码"
-          placeholder="密码：12345678"
-          :rules="[{ required: true, message: '请填写密码' }]"
-      />
-    </van-cell-group>
-    <div style="margin: 16px;">
-      <van-button  :loading="isLoading"  loading-text="登录中........" color="linear-gradient(to right, #4bb0ff, #6149f6)" block round  type="primary" native-type="submit">
-        登录
-      </van-button>
-      <van-button to="/user/register" color="linear-gradient(to right, #4bb0ff, #6149f6)" block round  type="primary" native-type="submit">
-        注册
-      </van-button>
+  <div id="login-page">
+    <van-form @submit="onSubmit">
+      <van-cell-group inset>
+        <van-field
+            v-model="loginAccount"
+            name="loginAccount"
+            label="账号"
+            placeholder="账号：dadada"
+            :rules="[{ required: true, message: '请填写账号' }]"
+        />
+        <van-field
+            v-model="loginPassword"
+            type="password"
+            name="loginPassword"
+            label="密码"
+            placeholder="密码：12345678"
+            :rules="[{ required: true, message: '请填写密码' }]"
+        />
+      </van-cell-group>
+      <div style="margin: 16px;">
+        <van-button  :loading="isLoading"  loading-text="登录中........" color="linear-gradient(to right, #4bb0ff, #6149f6)" block round  type="primary" native-type="submit">
+          登录
+        </van-button>
+        <van-button style="margin-top: 20px" to="/user/register" color="linear-gradient(to right, #4bb0ff, #6149f6)" block round  type="primary" native-type="submit">
+          注册
+        </van-button>
 
-    </div>
-
-    <van-divider dashed style="margin-top: 300px">author:Da</van-divider>
-  </van-form>
-
+      </div>
+      <van-divider dashed style="margin-top: 300px">author:Da</van-divider>
+    </van-form>
+  </div>
 
 </template>
 
+
 <style scoped>
+
 
 </style>

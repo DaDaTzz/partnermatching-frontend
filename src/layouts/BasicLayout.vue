@@ -5,7 +5,7 @@ import routes from "../config/router.ts";
 
 const router = useRouter();
 const route = useRoute();
-const DEFAULT_TITLE = '伙伴匹配'
+const DEFAULT_TITLE = '交友网'
 const title = ref(DEFAULT_TITLE);
 
 /**
@@ -19,6 +19,8 @@ router.beforeEach((to, from) => {
   title.value = route?.title ?? DEFAULT_TITLE;
 })
 
+
+
 const onClickLeft = () => {
   router.back();
 };
@@ -26,7 +28,8 @@ const onClickRight = () => {
   router.push('/search');
 };
 
-//const active = ref("index");
+const active = ref(0);
+
 
 </script>
 
@@ -38,6 +41,7 @@ const onClickRight = () => {
       @click-right="onClickRight"
   >
     <template #right>
+
       <van-icon name="search" size="18"/>
     </template>
   </van-nav-bar>
@@ -46,10 +50,11 @@ const onClickRight = () => {
     <router-view/>
   </div>
 
-  <van-tabbar router @change="onChange">
+  <van-tabbar router v-model="active" active-color="#1989fa" inactive-color="#7d7e80">
     <van-tabbar-item to="/" icon="home-o" name="index">主页</van-tabbar-item>
     <van-tabbar-item to="/team" icon="search" name="team">队伍</van-tabbar-item>
-    <van-tabbar-item to="/friend" icon="friends-o" name="friend">好友</van-tabbar-item>
+    <van-tabbar-item to="/port/add" icon="add-o" name="port">发布</van-tabbar-item>
+    <van-tabbar-item to="/message" icon="chat-o" name="friend">消息</van-tabbar-item>
     <van-tabbar-item to="/user" icon="user-o" name="user">个人</van-tabbar-item>
   </van-tabbar>
 </template>

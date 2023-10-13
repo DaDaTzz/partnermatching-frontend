@@ -14,6 +14,7 @@ const initFormData = {
   "maxNum": 3,
   "password": "",
   "states": 0,
+  "profilePhoto":'',
 }
 
 const minDate = new Date();
@@ -55,6 +56,13 @@ const onSubmit = async () => {
             label="队伍名"
             placeholder="请填写队伍名"
             :rules="[{ required: true, message: '请填写队伍名' }]"
+        />
+        <van-field
+            v-model="addTeamData.profilePhoto"
+            name="name"
+            label="队伍头像"
+            placeholder="请用户头像url"
+            :rules="[{ required: true, message: '请填写队伍头像' }]"
         />
           <van-field
               v-model="addTeamData.description"

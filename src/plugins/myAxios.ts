@@ -1,8 +1,6 @@
 // 创建实例时配置默认值
 import axios from "axios";
-import {useRouter} from "vue-router";
 
-const router = useRouter()
 
 const myAxios = axios.create({
     // baseURL:'http://8.130.133.165:8080',
