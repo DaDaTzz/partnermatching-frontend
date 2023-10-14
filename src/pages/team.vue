@@ -17,7 +17,9 @@ const toAddTeam = () => {
   })
 }
 
-const teamList = ref([]);
+const teamList = ref({
+
+});
 
 const searchText = ref('')
 
@@ -41,7 +43,6 @@ const listTeam = async (val = '', states = 0) => {
 }
 
 
-
 // 页面加载时触发一次
 onMounted(() => {
   listTeam();
@@ -56,10 +57,8 @@ const onSearch = (val) => {
  * @param name
  */
 const onTabChange = (name) => {
-  // 查公开
   if (name === 'public'){
     listTeam(searchText.value, 0);
-    // 查加密
   }else {
     listTeam(searchText.value, 2);
   }
@@ -75,7 +74,7 @@ const onTabChange = (name) => {
     <van-tab title="加密" name="secret"></van-tab>
   </van-tabs>
   <van-button style="position: fixed; bottom: 60px; width: 50px; right: 12px; height: 50px; border-radius: 50%; z-index:999" class="add-button" icon="plus" type="primary" @click="toAddTeam"></van-button>
-  <team-card-list :teamList="teamList" :myJoinTeamList="myJoinTeamList"/>
+  <team-card-list :teamList="teamList" />
   <van-empty v-if="!teamList || teamList.length < 1" description="没有更多了" />
 </template>
 

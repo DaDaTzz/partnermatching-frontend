@@ -104,9 +104,13 @@ const doDisbandTeam = async (id: number, password:string) =>{
  */
 
 const teamInfo = (team)=>{
+  // console.log(JSON.stringify(team.createUser))
+  // console.log(JSON.stringify(team.joinUsers))
   router.push({
     path:'/team/info',
-    query:team,
+    query:{
+      team:JSON.stringify(team),
+    }
   })
 }
 
@@ -148,6 +152,6 @@ const teamInfo = (team)=>{
 <style scoped>
 #teamCardList :deep(.van-image__img){
   height: 110px;
-  object-fit: unset;
+  
 }
 </style>

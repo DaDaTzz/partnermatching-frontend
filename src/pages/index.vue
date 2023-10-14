@@ -81,7 +81,6 @@ const getPorts = async (val = '') => {
       })
   if (portListData) {
     portList.value = portListData.records
-    console.log(portList.value)
   }
   loading.value = false;
 }
