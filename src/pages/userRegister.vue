@@ -7,6 +7,9 @@ const loginAccount = ref('')
 const loginPassword = ref('')
 const checkPassword = ref('')
 const nickname = ref('')
+const phone = ref('')
+const showCodeInput = ref(false)
+const inputCode = ref('')
 
 /**
  * 用户注册
@@ -17,14 +20,33 @@ const onSubmit = async () => {
     loginPassword: loginPassword.value,
     checkPassword: checkPassword.value,
     nickname: nickname.value,
+    phone: phone.value,
+    inputCode:inputCode.value
   })
   if (res.data.code === 200) {
     alert("注册成功");
-    window.location.href = "/user/login";
+    window.location.href = '/user/updateTag';
   } else {
     alert("注册失败，" + res.data.description);
   }
 };
+
+/**
+ * 发送手机验证码
+ *
+ */
+const doSendCode = async () => {
+  showCodeInput.value = true;
+  const res = await myAxios.post('/user/sendSms', {
+    phone: phone.value,
+  })
+  if (res.data.code === 200) {
+    alert("短信验证码发送成功，验证码5分钟内有效！");
+  } else {
+    alert("短信验证码发送失败，" + res.data.description);
+  }
+}
+
 
 </script>
 
@@ -57,6 +79,20 @@ const onSubmit = async () => {
           label="确认密码"
           :rules="[{ required: true, message: '请确认密码' }]"
       />
+      <van-field
+          v-model="phone"
+          name="手机号"
+          label="手机号"
+          :rules="[{ required: true, message: '请填写手机号' }]"
+      />
+      <van-field
+          v-if="showCodeInput"
+          v-model="inputCode"
+          name="验证码"
+          label="验证码"
+          :rules="[{ required: true, message: '请填写验证码' }]"
+      />
+      <van-button plain type="primary" @click="doSendCode">发送验证码</van-button>
     </van-cell-group>
     <div style="margin: 16px;">
       <van-button round block type="primary" native-type="submit">

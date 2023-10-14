@@ -21,6 +21,7 @@ import portAdd from "../pages/portAdd.vue";
 import Message from "../pages/Message.vue";
 import fans from "../pages/fans.vue";
 import loves from "../pages/loves.vue";
+import bindEmail from "../pages/bindEmail.vue";
 
 
 const routes = [
@@ -39,6 +40,7 @@ const routes = [
     {path: '/user/fans', title:"我的粉丝", component: fans},
     {path: '/user/loves', title:"我的关注", component: loves},
     {path: '/user/update', title:'更新信息', component: UserUpdate},
+    {path: '/user/bindEmail', title:'绑定邮箱', component: bindEmail},
     {path: '/user/updateTag', title:'更新标签', component: UpdateTag},
     {path: '/user/team/join', title:'我加入的队伍', component: UserTeamJoin},
     {path: '/user/team/create', title:'我创建的队伍',component: UserTeamCreate},
