@@ -1,17 +1,20 @@
 <script setup lang="ts">
-import {useRoute} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
 import UserCardList from "../components/userCardList.vue";
 
+const router = useRouter()
 
 const currentUser = ref();
+const currentUserId = ref('')
 
 /**
  * 获取当前用户信息
  */
 onMounted(async () => {
   currentUser.value = await getCurrentUser();
+  currentUserId.value = currentUser.value.id
 })
 
 const route = useRoute()
@@ -28,6 +31,16 @@ if (joinUsers) {
 const loading = ref(false)
 
 
+const toUploadTeamImg = (id) =>{
+  router.push({
+    path:'/team/uploadImg',
+    query:{
+      id,
+    }
+  })
+}
+
+
 </script>
 
 <template>
@@ -41,7 +54,9 @@ const loading = ref(false)
           height="150px"
           :src="team.profilePhoto"/>
     </div>
-
+    <van-cell v-if="currentUserId === team.userId" @click="toUploadTeamImg(team.id)" icon="photo-o" title="修改封面"  is-link >
+      <van-button size="small" icon="plus" type="primary">上传图片</van-button>
+    </van-cell>
     <van-cell icon="flag-o" title="队伍名" is-link :value="team.name"/>
     <van-cell icon="label-o" title="队伍描述" is-link :value="team.description"/>
     <van-cell icon="manager-o" title="队长" is-link :value="team.createUser.nickname"/>

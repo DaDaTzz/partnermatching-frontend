@@ -57,19 +57,12 @@ const onSubmit = async () => {
             placeholder="请填写队伍名"
             :rules="[{ required: true, message: '请填写队伍名' }]"
         />
-        <van-field
-            v-model="addTeamData.profilePhoto"
-            name="name"
-            label="队伍头像"
-            placeholder="请用户头像url"
-            :rules="[{ required: true, message: '请填写队伍头像' }]"
-        />
+
           <van-field
               v-model="addTeamData.description"
-              rows="4"
               autosize
               label="队伍描述"
-              type="textarea"
+              type="text"
               placeholder="请输入队伍描述"
           />
 

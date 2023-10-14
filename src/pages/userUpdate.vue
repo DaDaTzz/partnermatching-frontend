@@ -8,10 +8,11 @@ const user = ref();
 
 onMounted(async () => {
   user.value = await getCurrentUser();
-  if(user.value.tags){
+  if (user.value.tags) {
     user.value.tags = JSON.parse(user.value.tags)
   }
 })
+
 
 const router = useRouter();
 
@@ -26,12 +27,9 @@ const toEdit = (editKey: string, editName: string, currentValue: string) => {
   })
 }
 
-const toEditMsg = (currentValue: string) => {
+const toEditMsg = () => {
   router.push({
-    path: '/upload/msg',
-    query: {
-      currentValue,
-    }
+    path: '/upload/awata',
   })
 }
 
@@ -44,11 +42,9 @@ const toUpdateTag = (currentValue: string) => {
   })
 }
 
-const toBindEmail = ()=>{
+const toBindEmail = () => {
   router.push('/user/bindEmail');
 }
-
-
 
 
 </script>
@@ -58,7 +54,7 @@ const toBindEmail = ()=>{
     <div style="text-align: center">
       <van-image
           title="头像"
-          @click="toEditMsg(user.profilePhoto)"
+          @click="toEditMsg"
           round
           fit="cover"
           width="10rem"
@@ -68,7 +64,7 @@ const toBindEmail = ()=>{
 
     <van-cell title="账号" is-link :value="user.loginAccount"/>
     <van-cell title="昵称" is-link :value="user.nickname" @click="toEdit('nickname','昵称', user.nickname)"/>
-    <van-cell title="性别" is-link :value="user.sex === '1' ? '男':'女'" @click="toEdit('sex','性别', user.sex)"/>
+    <van-cell title="性别" is-link :value="user.sex === 1?'男':'女'" @click="toEdit('sex','性别', user.sex)"/>
     <van-cell title="电话" is-link :value="user.phone" @click="toEdit('phone','电话', user.phone)"/>
     <van-cell title="邮箱" is-link :value="user.email === null ? '未绑定邮箱': user.email " @click="toBindEmail"/>
     <van-cell title="标签" is-link @click="toUpdateTag(user.tags)">

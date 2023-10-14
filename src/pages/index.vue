@@ -5,7 +5,6 @@ import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
 import qs from "qs";
 import UserCardList from "../components/userCardList.vue";
-import {userType} from "../models/user";
 import imag1 from "../assets/imags/tpic/111.jpg";
 import imag2 from "../assets/imags/tpic/222.jpg";
 import imag3 from "../assets/imags/tpic/333.jpg";
@@ -42,7 +41,7 @@ const matchUsers = async (val = '') => {
     },
   })
       .then(function (response) {
-        console.log('/user/match success', response);
+        //console.log('/user/match success', response);
         return response.data?.data;
       })
       .catch(function (error) {
@@ -72,7 +71,7 @@ const getPorts = async (val = '') => {
     }
   })
       .then(function (response) {
-        console.log('/port/list/page/vo success', response);
+        //console.log('/port/list/page/vo success', response);
         return response.data?.data;
       })
       .catch(function (error) {
@@ -81,6 +80,13 @@ const getPorts = async (val = '') => {
       })
   if (portListData) {
     portList.value = portListData.records
+  }
+  for (let i = 0; i < portList.value.length; i++) {
+    if(portList.value[i].img){
+      let imgUrls = []
+      imgUrls = JSON.parse(portList.value[i].img)
+      portList.value[i].img = imgUrls[0]
+    }
   }
   loading.value = false;
 }

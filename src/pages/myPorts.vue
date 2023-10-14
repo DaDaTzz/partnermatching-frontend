@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
-import UserCardList from "../components/userCardList.vue";
 import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
 import PostCardList from "../components/PostCardList.vue";
-import portInfo from "./portInfo.vue";
 
 
 const currentUser = ref();
@@ -31,7 +28,6 @@ const loading = ref(false)
 const getMyPorts = async () => {
   let portListData;
   loading.value = true;
-  const num = 20;
   portListData = await myAxios.get('/post/list/page/vo', {
     params: {
       userId:currentUser.value.id
@@ -47,6 +43,13 @@ const getMyPorts = async () => {
       })
   if (portListData) {
     portList.value = portListData.records;
+  }
+  for (let i = 0; i < portList.value.length; i++) {
+    if(portList.value[i].img){
+      let imgUrls = []
+      imgUrls = JSON.parse(portList.value[i].img)
+      portList.value[i].img = imgUrls[0]
+    }
   }
   loading.value = false;
 }

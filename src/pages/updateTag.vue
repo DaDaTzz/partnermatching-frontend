@@ -95,6 +95,7 @@ const doClose = (tag) => {
   })
 }
 
+const router = useRouter()
 
 /**
  * 更新
@@ -106,7 +107,7 @@ const doUpdate = async () => {
   })
   if (res.data.code === 200) {
     alert("更新成功");
-    window.location.href = '/user/update'
+    await router.push('/user/update')
   } else {
     alert("更新失败，" + res.data.description);
   }

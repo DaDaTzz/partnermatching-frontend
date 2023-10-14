@@ -71,10 +71,9 @@ const onSubmit = async () => {
         />
         <van-field
             v-model="addTeamData.description"
-            rows="4"
             autosize
             label="队伍描述"
-            type="textarea"
+            type="text"
             placeholder="请输入队伍描述"
         />
 
