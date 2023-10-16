@@ -6,10 +6,36 @@ import routes from "../config/router.ts";
 
 const router = useRouter()
 
+const route = useRoute();
+const DEFAULT_TITLE = '添加博文'
+const title = ref(DEFAULT_TITLE);
+
+/**
+ * 根据路由切换标题
+ */
+router.beforeEach((to, from) => {
+  const toPath = to.path;
+  const route = routes.find((route) => {
+    return toPath == route.path
+  })
+  title.value = route?.title ?? DEFAULT_TITLE;
+})
+
+const onClickLeft = () => {
+  router.back();
+};
+const onClickRight = () => {
+  router.push('/search');
+};
+
+/*
+---------------------------------------------------
+ */
+
+
 const titlee = ref('')
 const content = ref('')
 const fileList = ref([])
-
 
 const onSubmit = () => {
   let formData = new FormData();
@@ -36,30 +62,6 @@ const onSubmit = () => {
 }
 
 
-const route = useRoute();
-const active = ref(0);
-const DEFAULT_TITLE = '交友网'
-const title = ref(DEFAULT_TITLE);
-
-/**
- * 根据路由切换标题
- */
-router.beforeEach((to, from) => {
-  const toPath = to.path;
-  const route = routes.find((route) => {
-    return toPath == route.path
-  })
-  title.value = route?.title ?? DEFAULT_TITLE;
-})
-
-
-
-const onClickLeft = () => {
-  router.back();
-};
-const onClickRight = () => {
-  router.push('/search');
-};
 
 
 
