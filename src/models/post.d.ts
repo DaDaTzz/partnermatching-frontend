@@ -8,7 +8,11 @@ export type portType = {
     content: string;
     tags: string;
     thumbNum: number;
-    favourNum: string;
+    favourNum: number;
     userId: string;
     createTime:Date;
+    hasThumb:boolean;
+    hasFavour:boolean;
+    commentNum?:number;
+    postCommentUserVOs;
 };

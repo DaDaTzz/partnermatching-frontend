@@ -11,6 +11,7 @@ export type userType = {
     email: string;
     tags: string;
     states: number;
+    isFollow:boolean;
     profilePhoto?: string;
     profile?: string;
     createTime: Date;

@@ -2,6 +2,7 @@
 import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
+import myAxios from "../plugins/myAxios.ts";
 
 
 const currentUser = ref();
@@ -14,7 +15,28 @@ onMounted(async () => {
 })
 
 const route = useRoute()
-const user = route.query
+const user = ref(route.query)
+
+
+
+/**
+ * 关注 / 取关
+ */
+const addFollow = async (id) => {
+  const res = await myAxios.post('/user/follow', {
+    id,
+  })
+  if (res.data.code === 200) {
+    if(user.value.isFollow === 'false'){
+      user.value.isFollow = 'true';
+    }else if(user.value.isFollow === 'true'){
+      user.value.isFollow = 'false';
+    }
+    //alert("操作成功！");
+  } else {
+    alert("操作失败，" + res.data.description);
+  }
+}
 
 </script>
 
@@ -41,8 +63,14 @@ const user = route.query
     </van-cell>
     <van-cell title="个人简介" is-link :value="user.profile"/>
     <div style="margin: 16px;">
-      <van-button block round plain hairline type="primary" native-type="submit">
+
+      <van-button v-if="user.isFollow === 'false'" @click="addFollow(user.id)"  plain round block type="primary"
+                  native-type="submit">
         关注
+      </van-button>
+      <van-button v-if="user.isFollow === 'true'" @click="addFollow(user.id)" plain round block type="primary"
+                  native-type="submit" style="border-color: #969799; color: #969799">
+        已关注
       </van-button>
       <van-button style="margin-top: 15px" block round plain hairline type="primary" native-type="submit">
         私聊

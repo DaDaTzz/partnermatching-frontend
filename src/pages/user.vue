@@ -2,7 +2,7 @@
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
 import myAxios from "../plugins/myAxios.ts";
-import { Toast} from "vant";
+import {Toast} from "vant";
 import {useRouter} from "vue-router";
 
 
@@ -40,17 +40,26 @@ const toUserUpdatePage = () => {
 
 <template>
   <div>
-    <van-space :size="20">
-      <van-image
-          title="头像"
-          @click="toUserUpdatePage"
-          round
-          fit="cover"
-          width="5rem"
-          height="5rem"
-          :src="user?.profilePhoto"/>
+    <van-row style="margin-left: 10px">
+      <van-col span="5">
+        <van-space :size="20">
+          <van-image
+              title="头像"
+              @click="toUserUpdatePage"
+              round
+              fit="cover"
+              width="5rem"
+              height="5rem"
+              :src="user?.profilePhoto"/>
+        </van-space>
+      </van-col>
+      <van-col span="8">
+        <P style="margin-left: 20px;font-size: 13px; color: #1a1a1a">{{ user?.nickname }}</P>
+        <P style="margin-left: 20px;font-size: 10px; color: #969799">{{ user?.profile }}</P>
+      </van-col>
+    </van-row>
 
-    </van-space>
+
   </div>
   <van-cell-group>
     <van-cell title="我的标签" is-link :value="user?.tags">
@@ -58,12 +67,11 @@ const toUserUpdatePage = () => {
         {{ tag }}
       </van-tag>
     </van-cell>
-    <van-grid>
-      <van-grid-item icon="photo-o" text="已创建队伍" to="/user/team/create"/>
-      <van-grid-item icon="photo-o" text="已加入队伍" to="/user/team/join"/>
-      <van-grid-item icon="photo-o" text="我写的贴文" to="/my/port"/>
-      <van-grid-item icon="photo-o" text="联系客服" @click="show"/>
-
+    <van-grid :border="false">
+      <van-grid-item icon="manager-o" text="已创建队伍" to="/user/team/create"/>
+      <van-grid-item icon="flag-o" text="已加入队伍" to="/user/team/join"/>
+      <van-grid-item icon="records" text="我的博文" to="/my/post"/>
+      <van-grid-item icon="phone-o" text="联系客服" @click="show"/>
     </van-grid>
     <van-cell icon="user-circle-o" title="编辑信息" is-link to="/user/update"/>
   </van-cell-group>

@@ -82,17 +82,23 @@ const getPorts = async (val = '') => {
     portList.value = portListData.records
   }
   for (let i = 0; i < portList.value.length; i++) {
-    if(portList.value[i].img){
+    if (portList.value[i].img) {
       let imgUrls = []
       imgUrls = JSON.parse(portList.value[i].img)
       portList.value[i].img = imgUrls[0]
     }
+
   }
   loading.value = false;
 }
 
 const onSearch = (val) => {
-  matchUsers(val);
+  if (userOrPort.value === 0) {
+    matchUsers(val);
+  } else {
+    getPorts(val)
+  }
+
 };
 
 
@@ -112,7 +118,7 @@ const onTabChange = (name) => {
   if (name === 'match') {
     userOrPort.value = 0;
     matchUsers(searchText.value)
-    // 加密
+    // 博文
   } else if (name === 'port') {
     userOrPort.value = 1;
     getPorts(searchText.value)
@@ -135,10 +141,10 @@ const onTabChange = (name) => {
     </van-swipe-item>
   </van-swipe>
   <van-tabs v-model:active="active" @change="onTabChange">
-    <van-tab title="匹配用户" name="match"></van-tab>
+    <van-tab title="推荐用户" name="match"></van-tab>
     <van-tab title="热门博文" name="port"></van-tab>
   </van-tabs>
-  <van-search shape="round" v-model="searchText" placeholder="请输入关键词" @search="onSearch"/>
+  <van-search shape="round" v-model="searchText" placeholder="请输入搜索关键词" @search="onSearch"/>
 
   <div v-if="userOrPort === 0">
     <user-card-list :user-list="userList" :loading="loading"/>

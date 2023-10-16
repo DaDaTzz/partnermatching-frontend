@@ -2,9 +2,11 @@
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import routes from "../config/router.ts";
+import myAxios from "../plugins/myAxios.ts";
 
 const router = useRouter();
 const route = useRoute();
+const active = ref(0);
 const DEFAULT_TITLE = '交友网'
 const title = ref(DEFAULT_TITLE);
 
@@ -28,13 +30,16 @@ const onClickRight = () => {
   router.push('/search');
 };
 
-const active = ref(0);
+
+
 
 
 </script>
 
 <template>
   <van-nav-bar
+      fixed
+      id="reset"
       :title="title"
       left-arrow
       @click-left="onClickLeft"
@@ -42,7 +47,8 @@ const active = ref(0);
   >
     <template #right>
 
-      <van-icon name="search" size="18"/>
+      <van-icon name="search" size="18" v-if="route.meta.SearchShow !== false"/>
+      <p v-if="route.meta.TiJiaoShow" @click.stop="">提交</p>
     </template>
   </van-nav-bar>
 
@@ -50,17 +56,23 @@ const active = ref(0);
     <router-view/>
   </div>
 
-  <van-tabbar router v-model="active" active-color="#1989fa" inactive-color="#7d7e80">
+  <van-tabbar router v-model="active" v-if="route.meta.BottomNavShow !== false" >
     <van-tabbar-item to="/" icon="home-o" name="index">主页</van-tabbar-item>
     <van-tabbar-item to="/team" icon="search" name="team">队伍</van-tabbar-item>
-    <van-tabbar-item to="/port/add" icon="add-o" name="port">发布</van-tabbar-item>
-    <van-tabbar-item to="/message" icon="chat-o" name="friend">消息</van-tabbar-item>
+    <van-tabbar-item to="/post/add" icon="add-o" name="port">发布</van-tabbar-item>
+    <van-tabbar-item to="/message" icon="smile-comment-o" name="friend">消息</van-tabbar-item>
     <van-tabbar-item to="/user" icon="user-o" name="user">个人</van-tabbar-item>
   </van-tabbar>
+
+
 </template>
 
 <style scoped>
 #content {
+  margin-top: 60px;
   padding-bottom: 50px;
+}
+#reset  /deep/ .van-ellipsis{
+  font-weight: bold;
 }
 </style>

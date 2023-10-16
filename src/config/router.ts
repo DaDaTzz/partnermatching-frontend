@@ -23,6 +23,8 @@ import loves from "../pages/loves.vue";
 import bindEmail from "../pages/bindEmail.vue";
 import UploaderAwata from "../pages/UploaderAwata.vue";
 import UploaderTeamImg from "../pages/UploaderTeamImg.vue";
+import UpdatePassword from "../pages/updatePassword.vue";
+import MyFavours from "../pages/myFavours.vue";
 
 
 const routes = [
@@ -38,9 +40,10 @@ const routes = [
     {path: '/user/edit', title:'编辑信息', component: Edit},
     {path: '/user/register', title:'注册',component: UserRegister},
     {path: '/user/list', title:'用户列表', component: SearchResult},
-    {path: '/user/login', title:"学习交友圈", component: UserLogin},
+    {path: '/user/login', title:"组队鸭", component: UserLogin},
     {path: '/user/fans', title:"我的粉丝", component: fans},
     {path: '/user/loves', title:"我的关注", component: loves},
+    {path: '/user/updatePassword', title:"忘记密码", component: UpdatePassword},
     {path: '/user/update', title:'更新信息', component: UserUpdate},
     {path: '/user/bindEmail', title:'绑定邮箱', component: bindEmail},
     {path: '/user/updateTag', title:'更新标签', component: UpdateTag},
@@ -48,9 +51,10 @@ const routes = [
     {path: '/user/team/create', title:'我创建的队伍',component: UserTeamCreate},
     {path: '/message', title:'消息中心', component: Message},
     {path: '/upload/awata', title:'上传头像', component: UploaderAwata},
-    {path: '/port/info', title:'正文', component: PortInfo},
-    {path: '/my/port', title:'我的博文', component: myPorts},
-    {path: '/port/add', title:'添加博文', component: portAdd},
+    {path: '/post/info', title:'正文', component: PortInfo, meta:{BottomNavShow: false}},
+    {path: '/my/post', title:'我的博文', component: myPorts},
+    {path: '/my/favours', title:'我的收藏', component: MyFavours},
+    {path: '/post/add', title:'添加博文', component: portAdd,meta:{TiJiaoShow:true, SearchShow:false}},
 
 
 

@@ -4,10 +4,11 @@ import qs from "qs";
 </script>
 
 <template>
-  <van-grid>
-    <van-grid-item icon="photo-o" text="粉丝" to="/user/fans"/>
-    <van-grid-item icon="photo-o" text="关注" to="/user/loves"/>
-    <van-grid-item icon="photo-o" text="我写的贴文" to="/my/port"/>
+  <van-grid :border="false" >
+      <van-grid-item icon="friends" icon-color="#9999FF" text="粉丝" to="/user/fans"/>
+      <van-grid-item icon="star-o" icon-color="#FFB3FF" text="关注" to="/user/loves"/>
+      <van-grid-item icon="good-job" icon-color="#77DDFF" text="赞" to=""/>
+      <van-grid-item icon="like" icon-color="#99BBFF" text="收藏" to="/my/favours"/>
   </van-grid>
 </template>
 
