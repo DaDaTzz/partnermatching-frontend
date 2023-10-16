@@ -38,6 +38,7 @@ const content = ref('')
 const fileList = ref([])
 
 const onSubmit = () => {
+  show.value = true
   let formData = new FormData();
   for (let i = 0; i < fileList.value.length; i++) {
     formData.append('file', fileList.value[i].file)
@@ -50,9 +51,9 @@ const onSubmit = () => {
       "Content-Type": "multipart/form-data",
     },
   }).then((res) => {
+    show.value = false;
     if (res.data.code == 200) {
       alert("上传成功")
-      //window.location.href = '/user/update'
       router.push('/my/post')
     }else {
       alert("上传失败，" + res.data.description);
@@ -60,6 +61,8 @@ const onSubmit = () => {
   });
 
 }
+
+const show = ref(false)
 
 
 
@@ -92,9 +95,28 @@ const onSubmit = () => {
     <van-field v-model="content" type="textarea" rows="8" placeholder="请输入正文"/>
   </div>
 
+  <van-overlay :show="show">
+    <div class="wrapper" @click.stop>
+      <div class="block">
+        上传中。。。
+      </div>
+    </div>
+  </van-overlay>
+
+
 </template>
 
 
 <style scoped>
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
 
+.block {
+  width: 120px;
+  height: 120px;
+}
 </style>

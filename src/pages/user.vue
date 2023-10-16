@@ -4,6 +4,7 @@ import {getCurrentUser} from "../services/user.ts";
 import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
 import {useRouter} from "vue-router";
+import vxImg from "../assets/imags/tpic/vx.jpg";
 
 
 const user = ref();
@@ -35,6 +36,10 @@ const toUserUpdatePage = () => {
 /**
  * 联系客服
  */
+const show = ref(false)
+const showVX = () => {
+  show.value = !show.value;
+}
 
 </script>
 
@@ -71,7 +76,7 @@ const toUserUpdatePage = () => {
       <van-grid-item icon="manager-o" text="已创建队伍" to="/user/team/create"/>
       <van-grid-item icon="flag-o" text="已加入队伍" to="/user/team/join"/>
       <van-grid-item icon="records" text="我的博文" to="/my/post"/>
-      <van-grid-item icon="phone-o" text="联系客服" @click="show"/>
+      <van-grid-item icon="phone-o" text="联系客服" @click="showVX"/>
     </van-grid>
     <van-cell icon="user-circle-o" title="编辑信息" is-link to="/user/update"/>
   </van-cell-group>
@@ -80,6 +85,14 @@ const toUserUpdatePage = () => {
       注销
     </van-button>
   </div>
+
+  <van-overlay :show="show">
+    <div class="wrapper" @click.stop>
+      <div class="block" style="text-align: center">
+        <van-image :src="vxImg" style="width: 80%" @click="showVX"/>
+      </div>
+    </div>
+  </van-overlay>
 
 
 </template>
@@ -92,5 +105,14 @@ const toUserUpdatePage = () => {
   font-size: 16px;
   font-family: 楷体;
 }
+
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
 
 </style>

@@ -133,7 +133,7 @@ const onTabChange = (name) => {
       background="#d5ecf3"
       color="#1989fa"
       left-icon="volume-o"
-      text="前端真的恶心人啊啊啊啊啊啊啊啊啊啊啊啊"
+      text="前端真的恶心人啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"
   />
   <van-swipe class="my-swipe" :autoplay="2000" style="margin-top: 10px">
     <van-swipe-item v-for="image in images" :key="image">
