@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import {getCurrentUser} from "../services/user.ts";
-import myAxios from "../plugins/myAxios.ts";
+import {getCurrentUser} from "../../services/user.ts";
+import myAxios from "../../plugins/myAxios.ts";
 import {Toast} from "vant";
 import {useRouter} from "vue-router";
-import vxImg from "../assets/imags/tpic/vx.jpg";
+import vxImg from "../../assets/imags/tpic/vx.jpg";
 
 
 const user = ref();
@@ -75,7 +75,7 @@ const showVX = () => {
     <van-grid :border="false">
       <van-grid-item icon="manager-o" text="已创建队伍" to="/user/team/create"/>
       <van-grid-item icon="flag-o" text="已加入队伍" to="/user/team/join"/>
-      <van-grid-item icon="records" text="我的博文" to="/my/post"/>
+      <van-grid-item icon="records" text="我的博客" to="/my/post"/>
       <van-grid-item icon="chat-o" text="联系客服" @click="showVX"/>
     </van-grid>
     <van-cell icon="user-circle-o" title="编辑信息" is-link to="/user/update"/>

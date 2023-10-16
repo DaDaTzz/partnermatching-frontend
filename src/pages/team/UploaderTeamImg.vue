@@ -5,7 +5,7 @@
 
 
 <script setup>
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../../plugins/myAxios.ts";
 import {useRoute,useRouter} from "vue-router";
 import {ref} from "vue";
 

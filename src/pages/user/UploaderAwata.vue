@@ -6,7 +6,7 @@
 
 <script setup>
 import {useRoute, useRouter} from "vue-router";
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../../plugins/myAxios.ts";
 
 const route = useRoute()
 const router = useRouter()

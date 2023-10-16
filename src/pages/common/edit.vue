@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
 import { ref} from "vue";
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../../plugins/myAxios.ts";
 import {Toast} from "vant";
-import {getCurrentUser} from "../services/user.ts";
+import {getCurrentUser} from "../../services/user.ts";
 
 
 const route = useRoute()

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../../plugins/myAxios.ts";
 import {Toast} from "vant";
 import {useRouter} from "vue-router";
+import logo from "/src/assets/imags/tpic/logo.png"
 
 
 const isLoading = ref(false)
@@ -37,7 +38,8 @@ const toUpdatePassword = () => {
 </script>
 
 <template>
-  <div id="login-page">
+  <div id="login-page" style="text-align: center">
+    <van-image :src="logo" style="width: 45%; height: 45%"/>
     <van-form @submit="onSubmit">
       <van-cell-group inset>
         <van-field
@@ -80,9 +82,5 @@ const toUpdatePassword = () => {
 
 
 <style scoped>
-.forgetPwd {
-
-
-}
 
 </style>

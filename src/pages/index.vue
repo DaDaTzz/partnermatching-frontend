@@ -5,10 +5,10 @@ import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
 import qs from "qs";
 import UserCardList from "../components/userCardList.vue";
-import imag1 from "../assets/imags/tpic/111.jpg";
-import imag2 from "../assets/imags/tpic/222.jpg";
-import imag3 from "../assets/imags/tpic/333.jpg";
-import imag4 from "../assets/imags/tpic/444.png";
+import imag1 from "../assets/imags/tpic/1.jpg";
+import imag2 from "../assets/imags/tpic/2.jpg";
+import imag3 from "../assets/imags/tpic/3.jpg";
+import imag4 from "../assets/imags/tpic/4.png";
 import PostCardList from "../components/PostCardList.vue";
 
 
@@ -153,6 +153,7 @@ const onTabChange = (name) => {
     <post-card-list :port-list="portList" :loading="loading"/>
   </div>
   <van-empty v-if="!userList || userList.length < 1" description="没有更多了"/>
+  <van-empty v-if="!portList || portList.length < 1" description="没有更多了"/>
 </template>
 
 <style scoped>

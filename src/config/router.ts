@@ -1,30 +1,30 @@
 import Index from "../pages/index.vue";
-import Team from "../pages/team.vue";
-import User from "../pages/user.vue";
-import Search from "../pages/search.vue";
-import Edit from "../pages/edit.vue";
-import SearchResult from "../pages/searchResult.vue";
-import UserLogin from "../pages/userLogin.vue";
-import teamAdd from "../pages/teamAdd.vue";
-import teamUpdate from "../pages/teamUpdate.vue";
-import UserUpdate from "../pages/userUpdate.vue";
-import UserTeamJoin from "../pages/userTeamJoin.vue";
-import UserTeamCreate from "../pages/userTeamCreate.vue";
-import UserRegister from "../pages/userRegister.vue";
-import UpdateTag from "../pages/updateTag.vue";
-import UserInfo from "../pages/userInfo.vue";
-import TeamInfo from "../pages/teamInfo.vue";
-import PortInfo from "../pages/portInfo.vue";
-import myPorts from "../pages/myPorts.vue";
-import portAdd from "../pages/portAdd.vue";
-import Message from "../pages/Message.vue";
-import fans from "../pages/fans.vue";
-import loves from "../pages/loves.vue";
-import bindEmail from "../pages/bindEmail.vue";
-import UploaderAwata from "../pages/UploaderAwata.vue";
-import UploaderTeamImg from "../pages/UploaderTeamImg.vue";
-import UpdatePassword from "../pages/updatePassword.vue";
-import MyFavours from "../pages/myFavours.vue";
+import Team from "../pages/team/team.vue";
+import User from "../pages/user/user.vue";
+import Search from "../pages/common/search.vue";
+import Edit from "../pages/common/edit.vue";
+import SearchResult from "../pages/common/searchResult.vue";
+import UserLogin from "../pages/user/userLogin.vue";
+import teamAdd from "../pages/team/teamAdd.vue";
+import teamUpdate from "../pages/team/teamUpdate.vue";
+import UserUpdate from "../pages/user/userUpdate.vue";
+import UserTeamJoin from "../pages/user/userTeamJoin.vue";
+import UserTeamCreate from "../pages/user/userTeamCreate.vue";
+import UserRegister from "../pages/user/userRegister.vue";
+import UpdateTag from "../pages/user/updateTag.vue";
+import UserInfo from "../pages/user/userInfo.vue";
+import TeamInfo from "../pages/team/teamInfo.vue";
+import PostInfo from "../pages/post/postInfo.vue";
+import myPost from "../pages/post/myPost.vue";
+import postAdd from "../pages/post/postAdd.vue";
+import Message from "../pages/common/Message.vue";
+import fans from "../pages/user/fans.vue";
+import loves from "../pages/post/loves.vue";
+import bindEmail from "../pages/user/bindEmail.vue";
+import UploaderAwata from "../pages/user/UploaderAwata.vue";
+import UploaderTeamImg from "../pages/team/UploaderTeamImg.vue";
+import UpdatePassword from "../pages/user/updatePassword.vue";
+import MyFavours from "../pages/post/myFavours.vue";
 
 
 const routes = [
@@ -51,10 +51,10 @@ const routes = [
     {path: '/user/team/create', title:'我创建的队伍',component: UserTeamCreate},
     {path: '/message', title:'消息中心', component: Message},
     {path: '/upload/awata', title:'上传头像', component: UploaderAwata},
-    {path: '/post/info', title:'正文', component: PortInfo, meta:{BottomNavShow: false}},
-    {path: '/my/post', title:'我的博文', component: myPorts},
+    {path: '/post/info', title:'正文', component: PostInfo, meta:{BottomNavShow: false}},
+    {path: '/my/post', title:'我的博客', component: myPost},
     {path: '/my/favours', title:'我的收藏', component: MyFavours},
-    {path: '/post/add', title:'添加博文', component: portAdd,meta:{TiJiaoShow:true, SearchShow:false}},
+    {path: '/post/add', title:'发布博客', component: postAdd,meta:{TiJiaoShow:true, SearchShow:false}},
 
 
 

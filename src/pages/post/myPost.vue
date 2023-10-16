@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
-import {getCurrentUser} from "../services/user.ts";
-import myAxios from "../plugins/myAxios.ts";
+import {getCurrentUser} from "../../services/user.ts";
+import myAxios from "../../plugins/myAxios.ts";
 import {Toast} from "vant";
-import PostCardList from "../components/PostCardList.vue";
+import PostCardList from "../../components/PostCardList.vue";
 
 
 const currentUser = ref();
@@ -20,7 +20,7 @@ const portList = ref([])
 const loading = ref(false)
 
 /**
- * 获取我的博文列表
+ * 获取我的博客列表
  */
 /**
  * 匹配用户

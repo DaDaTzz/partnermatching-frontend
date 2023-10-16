@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
-import {getCurrentUser} from "../services/user.ts";
-import UserCardList from "../components/userCardList.vue";
+import {getCurrentUser} from "../../services/user.ts";
+import UserCardList from "../../components/userCardList.vue";
 
 const router = useRouter()
 

@@ -1,19 +1,10 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
 import {effect, onMounted, ref} from "vue";
-import {getCurrentUser} from "../services/user.ts";
+import {getCurrentUser} from "../../services/user.ts";
 import {Toast} from "vant";
-import myAxios from "../plugins/myAxios.ts";
+import myAxios from "../../plugins/myAxios.ts";
 
-
-const currentUser = ref();
-
-/**
- * 获取当前用户信息
- */
-onMounted(async () => {
-  currentUser.value = await getCurrentUser();
-})
 
 const route = useRoute()
 
@@ -39,9 +30,6 @@ for (let i = 0; i < postComments.value.length; i++) {
     postComments.value[i].createTime = year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
   }
 }
-
-
-
 
 
 const content = ref('')
@@ -125,7 +113,7 @@ const doAddComment = async (id) =>{
           width="2rem"
           height="2rem"
           :src="post?.user.profilePhoto"/>
-      <span style="margin-bottom: 20px;margin-left: 10px">{{ currentUser?.nickname }}</span>
+      <span style="margin-bottom: 20px;margin-left: 10px">{{ post?.user.nickname }}</span>
     </van-cell>
     <van-cell center style="font-size: 19px" :value="post.title"/>
     <van-cell :value="post.content"/>

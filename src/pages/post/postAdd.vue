@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
-import myAxios from "../plugins/myAxios.ts";
-import routes from "../config/router.ts";
+import myAxios from "../../plugins/myAxios.ts";
+import routes from "../../config/router.ts";
 
 const router = useRouter()
 
 const route = useRoute();
-const DEFAULT_TITLE = '添加博文'
+const DEFAULT_TITLE = '发布博客'
 const title = ref(DEFAULT_TITLE);
 
 /**
@@ -53,10 +53,10 @@ const onSubmit = () => {
   }).then((res) => {
     show.value = false;
     if (res.data.code == 200) {
-      alert("上传成功")
+      alert("发布成功")
       router.push('/my/post')
     }else {
-      alert("上传失败，" + res.data.description);
+      alert("发布失败，" + res.data.description);
     }
   });
 
@@ -98,7 +98,7 @@ const show = ref(false)
   <van-overlay :show="show">
     <div class="wrapper" @click.stop>
       <div class="block">
-        上传中。。。
+        <van-loading type="spinner" />
       </div>
     </div>
   </van-overlay>

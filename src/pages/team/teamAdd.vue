@@ -1,41 +1,29 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import {ref} from "vue";
 import {Toast} from "vant";
-import {useRoute, useRouter} from "vue-router";
-import myAxios from "../plugins/myAxios.ts";
+import {useRouter} from "vue-router";
+import myAxios from "../../plugins/myAxios.ts";
 
-const router = useRouter();
-const route = useRoute();
+const router = useRouter()
+
+
+const initFormData = {
+  "name": "",
+  "description": "",
+  "expireTime": null,
+  "maxNum": 3,
+  "password": "",
+  "states": 0,
+  "profilePhoto":'',
+}
 
 const minDate = new Date();
 
 // 用户填写的表单数据
-const addTeamData = ref({});
+const addTeamData = ref({...initFormData})
 
 // 展示日期选择器
 const showPicker = ref(false);
-
-const id = route.query.id
-
-
-
-// 获取之前的队伍信息
-onMounted(async () => {
-  if (id <= 0) {
-    Toast.fail("加载队伍失败");
-    return;
-  }
-  const res = await myAxios.get("/team/query", {
-    params:{
-      id,
-    }
-  });
-  if (res.data.code === 200) {
-    addTeamData.value = res.data.data;
-  } else {
-    Toast.fail('加入失败' + (res.data.description ? `，${res.data.description}` : ''));
-  }
-})
 
 // 提交
 const onSubmit = async () => {
@@ -43,15 +31,15 @@ const onSubmit = async () => {
     ...addTeamData.value,
     states: Number(addTeamData.value.states)
   }
-  const res = await myAxios.post("/team/update", postData);
+  const res = await myAxios.post("/team/add", postData);
   if (res.data.code === 200 && res.data.data) {
-    Toast.success("更新成功");
+    Toast.success("添加成功");
     router.push({
       path: '/team',
       replace: true,
     });
-  } else {
-    Toast.fail("更新失败")
+  }else {
+    Toast.fail("添加失败，" + res.data.description);
   }
 }
 
@@ -69,13 +57,14 @@ const onSubmit = async () => {
             placeholder="请填写队伍名"
             :rules="[{ required: true, message: '请填写队伍名' }]"
         />
-        <van-field
-            v-model="addTeamData.description"
-            autosize
-            label="队伍描述"
-            type="text"
-            placeholder="请输入队伍描述"
-        />
+
+          <van-field
+              v-model="addTeamData.description"
+              autosize
+              label="队伍描述"
+              type="text"
+              placeholder="请输入队伍描述"
+          />
 
         <van-field
             is-link
@@ -94,6 +83,12 @@ const onSubmit = async () => {
               :min-date="minDate"
           />
         </van-popup>
+
+        <van-field name="stepper" label="最大人数">
+          <template #input>
+            <van-stepper v-model="addTeamData.maxNum" max="10" min="3"/>
+          </template>
+        </van-field>
 
         <van-field name="radio" label="队伍状态">
           <template #input>
@@ -122,7 +117,6 @@ const onSubmit = async () => {
         </van-button>
       </div>
     </van-form>
-
   </div>
 
 </template>

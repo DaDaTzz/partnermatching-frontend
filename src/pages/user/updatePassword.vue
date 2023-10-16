@@ -1,33 +1,33 @@
 <script setup lang="ts">
 import {ref} from "vue";
-import myAxios from "../plugins/myAxios.ts";
-import {Toast} from "vant";
+import myAxios from "../../plugins/myAxios.ts";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 
 const loginAccount = ref('')
-const loginPassword = ref('')
+const newPassword = ref('')
 const checkPassword = ref('')
-const nickname = ref('')
 const phone = ref('')
 const showCodeInput = ref(false)
 const inputCode = ref('')
 
 /**
- * 用户注册
+ * 修改密码
  */
 const onSubmit = async () => {
-  const res = await myAxios.post('/user/register', {
+  const res = await myAxios.post('/user/updatePassword', {
     loginAccount: loginAccount.value,
-    loginPassword: loginPassword.value,
+    newPassword:newPassword.value,
     checkPassword: checkPassword.value,
-    nickname: nickname.value,
     phone: phone.value,
     inputCode:inputCode.value
   })
   if (res.data.code === 200) {
-    alert("注册成功");
-    window.location.href = '/user/login';
+    alert("修改密码成功");
+    await router.push('/user/login');
   } else {
-    alert("注册失败，" + res.data.description);
+    alert("修改密码失败，" + res.data.description);
   }
 };
 
@@ -60,16 +60,10 @@ const doSendCode = async () => {
           :rules="[{ required: true, message: '请填写账号' }]"
       />
       <van-field
-          v-model="nickname"
-          name="昵称"
-          label="昵称"
-          :rules="[{ required: true, message: '请填写昵称' }]"
-      />
-      <van-field
-          v-model="loginPassword"
+          v-model="newPassword"
           type="password"
-          name="密码"
-          label="密码"
+          name="新的密码"
+          label="新的密码"
           :rules="[{ required: true, message: '请填写密码' }]"
       />
       <van-field

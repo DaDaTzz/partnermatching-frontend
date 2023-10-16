@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
+import {ref} from "vue";
+import myAxios from "../../plugins/myAxios.ts";
 
-const router = useRouter()
 const searchText = ref('');
+const route = useRoute()
+
+
+console.log()
 
 
 const originTagList = [
@@ -61,15 +65,14 @@ let tagList = ref(originTagList);
 
 /**
  * 搜索过滤
- * @param val
  */
-const onSearch = (val) => {
+const onSearch = () => {
   tagList.value = originTagList.map(parentTag => {
     const tempChildren = [...parentTag.children];
     const tempParentTag = {...parentTag}
     tempParentTag.children = tempChildren.filter(item => item.text.includes(searchText.value));
-        return tempParentTag;
-    })
+    return tempParentTag;
+  })
 };
 const onCancel = () => {
   searchText.value = '';
@@ -79,6 +82,7 @@ const onCancel = () => {
 
 const activeId = ref([]);
 const activeIndex = ref(0);
+
 
 
 /**
@@ -91,22 +95,27 @@ const doClose = (tag) => {
   })
 }
 
+const router = useRouter()
 
 /**
- * 执行搜索
+ * 更新
  */
-const doSearchResult = () => {
-  router.push({
-    path:'/user/list',
-    query:{
-      tags:activeId.value
-    }
+const doUpdate = async () => {
+  //alert(activeId.value)
+  const res = await myAxios.post('/user/updateTag', {
+    tags: activeId.value
   })
+  if (res.data.code === 200) {
+    alert("更新成功");
+    await router.push('/user/update')
+  } else {
+    alert("更新失败，" + res.data.description);
+  }
 }
 </script>
 
 <template>
-  <form action="/">
+  <form action="/public">
     <van-search
         v-model="searchText"
         show-action
@@ -118,7 +127,7 @@ const doSearchResult = () => {
   <van-divider content-position="left">已选标签</van-divider>
   <div v-if="activeId.length === 0">请选择标签</div>
   <van-row gutter="16">
-    <van-col v-for="tag in activeId" >
+    <van-col v-for="tag in activeId">
       <van-tag closeable size="small" type="primary" @close="doClose(tag)">
         {{ tag }}
       </van-tag>
@@ -133,7 +142,7 @@ const doSearchResult = () => {
   />
 
   <div style="padding: 12px">
-    <van-button block type="primary" @click="doSearchResult()" style="margin: 6px">搜索</van-button>
+    <van-button block type="primary" @click="doUpdate()" style="margin: 6px">更新</van-button>
   </div>
 
 </template>
