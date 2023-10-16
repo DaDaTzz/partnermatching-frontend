@@ -76,7 +76,7 @@ const showVX = () => {
       <van-grid-item icon="manager-o" text="已创建队伍" to="/user/team/create"/>
       <van-grid-item icon="flag-o" text="已加入队伍" to="/user/team/join"/>
       <van-grid-item icon="records" text="我的博文" to="/my/post"/>
-      <van-grid-item icon="phone-o" text="联系客服" @click="showVX"/>
+      <van-grid-item icon="chat-o" text="联系客服" @click="showVX"/>
     </van-grid>
     <van-cell icon="user-circle-o" title="编辑信息" is-link to="/user/update"/>
   </van-cell-group>
