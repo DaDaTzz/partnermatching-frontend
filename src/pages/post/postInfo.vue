@@ -133,7 +133,7 @@ const doAddComment = async (id) => {
 /**
  * 删除评论
  */
-const doDeleteComment = async (id) => {
+const doDeleteComment = async (id,userId) => {
   Dialog.confirm({
     title: '删除',
     message:
@@ -141,7 +141,8 @@ const doDeleteComment = async (id) => {
     theme: 'round-button',
   }).then(async () => {
     const res = await myAxios.post("/post_comment/del", {
-      id,
+      id:id,
+      createUserId:userId,
     });
     if (res?.data.code === 200) {
       await getPostById()
@@ -186,13 +187,13 @@ const doDeleteComment = async (id) => {
         </van-space>
       </van-col>
       <van-col span="20">
-        <P style="margin-top: 10px; font-size: 14px; color: #1a1a1a">
+        <P style="margin-top: 10px;margin-left: 10px; font-size: 14px; color: #1a1a1a">
           {{ postComment?.commentUser.nickname }}
           <!-- 自己的评论内容或者帖子的创建者才有权限删除评论 -->
-          <van-icon @click="doDeleteComment(postComment?.id)" v-if="postComment?.isCanDelete === true || currentUser.id === post.userId" name="delete-o"
+          <van-icon @click="doDeleteComment(postComment?.id,post.userId)" v-if="postComment?.isCanDelete === true || currentUser.id === post.userId" name="delete-o"
                     style="margin-left: 120px;" size="15px"/>
         </P>
-        <p type="text" style="margin-top: 10px;  font-size: 14px; color: #1a1a1a">{{
+        <p type="text" style="margin-top: 10px;margin-left: 10px;  font-size: 14px; color: #1a1a1a;">{{
             postComment?.content
           }}
         </p>
