@@ -55,7 +55,7 @@ const onSubmit = () => {
     if (res.data.code == 200) {
       alert("发布成功")
       router.push('/my/post')
-    }else {
+    } else {
       alert("发布失败，" + res.data.description);
     }
   });
@@ -65,11 +65,27 @@ const onSubmit = () => {
 const show = ref(false)
 
 
-
-
-
-
-
+/**
+ * 判断文件类型
+ * @param file
+ */
+const beforeRead = () =>{
+  if (fileList instanceof Array && fileList.length) {
+    for (let i = 0; i < fileList.value.length; i++) {
+      if (fileList.value[i].file.type !== 'image/jpeg' && fileList.value[i].file.type !== 'image/png' && fileList.value[i].file.type !== 'image/jpg') {
+        alert('请选择正确图片格式上传')
+        return false
+      }
+    }
+    return fileList
+  } else {
+    if (fileList.value.file.type !== 'image/jpeg' && fileList.value.file.type !== 'image/png' && fileList.value.file.type !== 'image/jpg') {
+      alert('请选择正确图片格式上传')
+      return false
+    }
+    return fileList;
+  }
+}
 
 
 </script>
@@ -90,7 +106,7 @@ const show = ref(false)
   </van-nav-bar>
 
   <div id="portAdd">
-    <van-uploader :after-read="afterRead" v-model="fileList" multiple :max-count="5"/>
+    <van-uploader :before-read="beforeRead" :max-count="5" :max-size="5*1024*1024" :after-read="afterRead" v-model="fileList" multiple/>
     <van-field v-model="titlee" placeholder="请输入标题"/>
     <van-field v-model="content" type="textarea" rows="8" placeholder="请输入正文"/>
   </div>
@@ -98,7 +114,7 @@ const show = ref(false)
   <van-overlay :show="show">
     <div class="wrapper" @click.stop>
       <div class="block">
-        <van-loading type="spinner" />
+        <van-loading type="spinner"/>
       </div>
     </div>
   </van-overlay>

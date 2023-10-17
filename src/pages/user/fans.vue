@@ -10,11 +10,12 @@ const user = ref();
 const loading = ref(false)
 const userList = ref([])
 
+
 onMounted(async () => {
   user.value = await getCurrentUser()
   /**
-   * 获取粉丝列表
-   */
+* 获取粉丝列表
+  */
   const userListData = await myAxios.get('/user/get/fans')
       .then(function (response) {
         //console.log('/user/get/love succeed', response);
@@ -24,7 +25,6 @@ onMounted(async () => {
         console.error('/user/get/love error', error);
         Toast.fail('请求失败');
       })
-  console.log(userListData)
   if (userListData) {
     userListData.forEach(user => {
       if (user.tags) {

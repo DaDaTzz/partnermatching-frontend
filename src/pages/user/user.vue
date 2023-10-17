@@ -58,9 +58,9 @@ const showVX = () => {
               :src="user?.profilePhoto"/>
         </van-space>
       </van-col>
-      <van-col span="8">
+      <van-col span="18">
         <P style="margin-left: 20px;font-size: 13px; color: #1a1a1a">{{ user?.nickname }}</P>
-        <P style="margin-left: 20px;font-size: 10px; color: #969799">{{ user?.profile }}</P>
+        <P style="margin-left: 20px;font-size: 10px; color: #969799">{{user?.profile}}</P>
       </van-col>
     </van-row>
 
