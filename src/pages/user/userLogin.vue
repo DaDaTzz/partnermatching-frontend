@@ -18,10 +18,9 @@ const onSubmit = async () => {
   })
   if (res.data.code === 200 && res.data.data) {
     localStorage.setItem('token', res.data.message)
-    Toast.success("登录成功");
     window.location.href = "/";
   } else {
-    Toast.fail("登陆失败");
+    alert("登陆失败，" + res.data.message);
     isLoading.value = false;
   }
 };

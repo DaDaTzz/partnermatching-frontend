@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import qs from "qs";
+import {onMounted} from "vue";
+import {getCurrentUser} from "../../services/user.ts";
+
+onMounted(() =>{
+  getCurrentUser()
+})
 
 </script>
 

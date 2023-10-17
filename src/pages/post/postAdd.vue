@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import myAxios from "../../plugins/myAxios.ts";
 import routes from "../../config/router.ts";
+import {getCurrentUser} from "../../services/user.ts";
+import {Dialog} from "vant";
 
 const router = useRouter()
 
@@ -36,6 +38,11 @@ const onClickRight = () => {
 const titlee = ref('')
 const content = ref('')
 const fileList = ref([])
+
+
+onMounted(() =>{
+  getCurrentUser();
+})
 
 const onSubmit = () => {
   show.value = true

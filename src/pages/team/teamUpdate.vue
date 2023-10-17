@@ -22,7 +22,7 @@ const id = route.query.id
 // 获取之前的队伍信息
 onMounted(async () => {
   if (id <= 0) {
-    Toast.fail("加载队伍失败");
+    alert("加载队伍失败");
     return;
   }
   const res = await myAxios.get("/team/query", {
