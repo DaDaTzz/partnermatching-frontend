@@ -1,38 +1,72 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
 import {effect, onMounted, ref} from "vue";
-import {getCurrentUser} from "../../services/user.ts";
 import {Toast} from "vant";
 import myAxios from "../../plugins/myAxios.ts";
 
 
 const route = useRoute()
 
-const post = JSON.parse(route.query.post)
-const favourNum = ref(post.favourNum)
-const thumbNum = ref(post.thumbNum)
-const hasThumb = ref(post.hasThumb)
-const hasFavour = ref(post.hasFavour)
-const postComments = ref(post.postCommentUserVOs)
+//const post = JSON.parse(route.query.post)
+
+const content = ref('')
+
+const postId = route.query.id
+const post = ref()
+const favourNum = ref()
+const thumbNum = ref()
+const hasThumb = ref()
+const hasFavour = ref()
+const postComments = ref([])
+const commentUser = ref()
+const imgs = ref([])
+
+
 
 /**
- * 处理时间格式
+ * 根据 id 获取 post
  */
-for (let i = 0; i < postComments.value.length; i++) {
-  if (postComments.value[i].createTime) {
-    let date = new Date(postComments.value[i].createTime);
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-    let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    let hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-    let minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    let seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-    postComments.value[i].createTime = year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+const getPostById = async () =>{
+  const res = await myAxios.get("/post/get/vo", {
+    params:{
+      id:postId,
+    },
+  });
+  if (res?.data.code === 200) {
+    post.value = res?.data.data
+    favourNum.value = post.value.favourNum
+    thumbNum.value = post.value.thumbNum
+    hasThumb.value = post.value.hasThumb
+    hasFavour.value = post.value.hasFavour
+    postComments.value = post.value.postCommentUserVOs
+    commentUser.value = postComments.value
+    imgs.value = JSON.parse(post.value.img)
+
+
+    /**
+     * 处理时间格式
+     */
+    for (let i = 0; i < postComments.value.length; i++) {
+      if (postComments.value[i].createTime) {
+        let date = new Date(postComments.value[i].createTime);
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+        let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+        let hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+        let minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+        let seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+        //console.log(year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds)
+        postComments.value[i].createTime = year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+      }
+    }
+  } else {
+    Toast.fail("获取失败")
   }
 }
 
-
-const content = ref('')
+onMounted(() =>{
+  getPostById()
+})
 
 
 
@@ -86,8 +120,7 @@ const doAddComment = async (id) =>{
     content:content.value
   });
   if (res?.data.code === 200) {
-    location.reload();
-    alert("添加成功")
+    await getPostById()
   } else {
     Toast.fail("添加失败")
   }
@@ -97,14 +130,11 @@ const doAddComment = async (id) =>{
 
 <template>
   <template v-if="post">
-    <div style="text-align: center">
-      <van-image
-          title="封面"
-          fit="cover"
-          width="100%"
-          height="100%"
-          :src="post.img"/>
-    </div>
+    <van-swipe class="my-swipe" :autoplay="2000" style="margin-top: 10px">
+      <van-swipe-item v-for="img in imgs" :key="img">
+        <van-image radius="15px" width="90%" height="150px" :src="img"/>
+      </van-swipe-item>
+    </van-swipe>
     <van-cell>
       <van-image
           title="头像"
@@ -117,7 +147,6 @@ const doAddComment = async (id) =>{
     </van-cell>
     <van-cell center style="font-size: 19px" :value="post.title"/>
     <van-cell :value="post.content"/>
-    <van-cell  :value="post.content"/>
     <van-cell  :value="'评论' + post.commentNum"/>
     <van-row v-for="postComment in postComments" style="margin-left: 10px">
       <van-col  span="3">
@@ -166,6 +195,14 @@ const doAddComment = async (id) =>{
   --van-card-background-color:#FFFFFF;
   --van-card-thumb-size: 30px;
 
+}
+
+.my-swipe .van-swipe-item {
+  height: 150px;
+  color: #fff;
+  font-size: 20px;
+  line-height: 150px;
+  text-align: center;
 }
 
 </style>

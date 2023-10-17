@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
-import {getCurrentUser} from "../services/user.ts";
-import myAxios from "../plugins/myAxios.ts";
 import {useRouter} from "vue-router";
 import {portType} from "../models/post";
-import {Toast} from "vant";
+
+const router = useRouter()
 
 interface PortCardListProps {
   loading: boolean;
@@ -17,24 +15,17 @@ const props = withDefaults(defineProps<PortCardListProps>(), {
   portList: [] as portType[],
 })
 
-const currentUser = ref();
 
-
-onMounted(async () => {
-  currentUser.value = await getCurrentUser();
-})
-
-
-const router = useRouter()
 
 /**
  * 跳转到文章详情页
  */
-const portInfo = (post) => {
+const portInfo = (id) => {
   router.push({
     path:'/post/info',
     query:{
-      post:JSON.stringify(post),
+      //post:JSON.stringify(post),
+      id:id,
     }
   })
   //console.log(JSON.stringify(post))
@@ -48,7 +39,7 @@ const portInfo = (post) => {
   <van-skeleton title avatar :row="3" :loading="props.loading" v-for="post in props.portList">
     <van-card
         id="portCard"
-        @click="portInfo(post)"
+        @click="portInfo(post.id)"
         :desc="post?.content"
         :title="post?.title"
         :thumb="post?.img"

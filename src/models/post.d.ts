@@ -15,4 +15,5 @@ export type portType = {
     hasFavour:boolean;
     commentNum?:number;
     postCommentUserVOs;
+    postComments;
 };

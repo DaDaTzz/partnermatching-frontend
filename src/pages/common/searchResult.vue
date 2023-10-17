@@ -29,7 +29,7 @@ onMounted(async () => {
     }
   })
       .then(function (response) {
-        console.log('/user/search/tags succeed', response);
+        //console.log('/user/search/tags succeed', response);
         return response?.data.data;
       })
       .catch(function (error) {

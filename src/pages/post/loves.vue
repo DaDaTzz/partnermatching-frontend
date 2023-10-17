@@ -17,7 +17,7 @@ onMounted(async () => {
    */
   const userListData = await myAxios.get('/user/get/love')
       .then(function (response) {
-        console.log('/user/get/love succeed', response);
+        //console.log('/user/get/love succeed', response);
         return response?.data.data;
       })
       .catch(function (error) {

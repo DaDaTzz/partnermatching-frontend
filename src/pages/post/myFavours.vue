@@ -31,7 +31,7 @@ const getMyFavour = async (val:'') => {
     title:val,
   })
       .then(function (response) {
-        console.log('/port/get/vo success', response);
+        //console.log('/port/get/vo success', response);
         return response.data?.data;
       })
       .catch(function (error) {

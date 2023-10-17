@@ -46,7 +46,7 @@ const toUpdatePassword = () => {
             v-model="loginAccount"
             name="loginAccount"
             label="账号"
-            placeholder="账号：dadada"
+            placeholder="请填写账号"
             :rules="[{ required: true, message: '请填写账号' }]"
         />
         <van-field
@@ -54,7 +54,7 @@ const toUpdatePassword = () => {
             type="password"
             name="loginPassword"
             label="密码"
-            placeholder="密码：999999999"
+            placeholder="请填写密码"
             :rules="[{ required: true, message: '请填写密码' }]"
         />
       </van-cell-group>

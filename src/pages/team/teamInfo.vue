@@ -3,34 +3,62 @@ import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../../services/user.ts";
 import UserCardList from "../../components/userCardList.vue";
+import myAxios from "../../plugins/myAxios.ts";
+import {Toast} from "vant";
 
 const router = useRouter()
+const route = useRoute()
 
 const currentUser = ref();
 const currentUserId = ref('')
 
-/**
- * 获取当前用户信息
- */
-onMounted(async () => {
-  currentUser.value = await getCurrentUser();
-  currentUserId.value = currentUser.value.id
-})
 
-const route = useRoute()
-const team = JSON.parse(route.query.team)
-const joinUsers = team.joinUsers
-if (joinUsers) {
-  joinUsers.forEach(user => {
-    if (user.tags) {
-      user.tags = JSON.parse(user.tags);
-    }
-  })
-}
+
+//const team = JSON.parse(route.query.team)
+const team = ref()
+const teamId = route.query.id
+const joinUsers = ref([])
 
 const loading = ref(false)
 
 
+
+/**
+ * 根据 id 获取 队伍信息
+ */
+const getTeamById = async ()=>{
+  const res = await myAxios.get("/team/get/vo", {
+    params:{
+      id:teamId,
+    },
+  });
+  if (res?.data.code === 200) {
+    team.value = res.data.data
+    joinUsers.value = team.value.joinUsers
+    if (joinUsers) {
+      for (let i = 0; i < joinUsers.value.length; i++) {
+        if (joinUsers.value[i].tags) {
+          joinUsers.value[i].tags = JSON.parse(joinUsers.value[i].tags)
+        }
+      }
+
+    }
+  } else {
+    Toast.fail("获取失败")
+  }
+}
+
+onMounted(async () =>{
+  await getTeamById()
+  currentUser.value = await getCurrentUser();
+  currentUserId.value = currentUser.value.id
+})
+
+
+/**
+ * 更新队伍封面（队长）
+ * @param id
+ */
 const toUploadTeamImg = (id) =>{
   router.push({
     path:'/team/uploadImg',

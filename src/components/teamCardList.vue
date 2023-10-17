@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import {teamType} from "../models/team";
 import {teamStatesEnum} from "../constants/team.ts";
-import teamLogo from '../assets/teamlogo.png'
 import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
 import {onMounted, ref} from "vue";
@@ -56,13 +55,13 @@ const doJoinTeam = async (team: teamType) =>{
     }
   }
 
-
-
 }
 
 
-
-// 更新队伍，跳转至更新队伍页
+/**
+ * 跳转到更新队伍信息页
+ * @param id
+ */
 const doUpdateTeam = (id: number) => {
   router.push({
     path:'/team/update',
@@ -72,7 +71,10 @@ const doUpdateTeam = (id: number) => {
   })
 }
 
-// 退出队伍
+/**
+ * 退出队伍
+ * @param id
+ */
 const doExitTeam = async (id: number) =>{
   const res = await myAxios.post("/team/exit", {
     teamId: id
@@ -103,13 +105,14 @@ const doDisbandTeam = async (id: number, password:string) =>{
  * 跳转队伍详情页
  */
 
-const teamInfo = (team)=>{
+const teamInfo = (id)=>{
   // console.log(JSON.stringify(team.createUser))
   // console.log(JSON.stringify(team.joinUsers))
   router.push({
     path:'/team/info',
     query:{
-      team:JSON.stringify(team),
+      //team:JSON.stringify(team),
+      id,
     }
   })
 }
@@ -120,7 +123,7 @@ const teamInfo = (team)=>{
 <template>
   <div id="teamCardList">
     <van-card
-        @click="teamInfo(team)"
+        @click="teamInfo(team.id)"
         v-for="team in props.teamList"
         :thumb="team.profilePhoto"
         :desc="team.description"
