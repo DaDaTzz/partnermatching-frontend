@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import {useRoute, useRouter} from "vue-router";
-import {effect, onMounted, ref} from "vue";
-import {Toast} from "vant";
+import {useRoute} from "vue-router";
+import {onMounted, ref} from "vue";
+import {Dialog, Toast} from "vant";
 import myAxios from "../../plugins/myAxios.ts";
+import {getCurrentUser} from "../../services/user.ts";
 
 
 const route = useRoute()
@@ -10,6 +11,8 @@ const route = useRoute()
 //const post = JSON.parse(route.query.post)
 
 const content = ref('')
+
+const currentUser = ref()
 
 const postId = route.query.id
 const post = ref()
@@ -22,14 +25,13 @@ const commentUser = ref()
 const imgs = ref([])
 
 
-
 /**
  * 根据 id 获取 post
  */
-const getPostById = async () =>{
+const getPostById = async () => {
   const res = await myAxios.get("/post/get/vo", {
-    params:{
-      id:postId,
+    params: {
+      id: postId,
     },
   });
   if (res?.data.code === 200) {
@@ -41,7 +43,6 @@ const getPostById = async () =>{
     postComments.value = post.value.postCommentUserVOs
     commentUser.value = postComments.value
     imgs.value = JSON.parse(post.value.img)
-
 
     /**
      * 处理时间格式
@@ -56,7 +57,7 @@ const getPostById = async () =>{
         let minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
         let seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
         //console.log(year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds)
-        postComments.value[i].createTime = year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds;
+        postComments.value[i].createTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
       }
     }
   } else {
@@ -64,10 +65,10 @@ const getPostById = async () =>{
   }
 }
 
-onMounted(() =>{
+onMounted(async () => {
+  currentUser.value = await getCurrentUser()
   getPostById()
 })
-
 
 
 /**
@@ -114,16 +115,40 @@ const doPostFavour = async (id) => {
 /**
  * 添加评论
  */
-const doAddComment = async (id) =>{
+const doAddComment = async (id) => {
   const res = await myAxios.post("/post_comment/add", {
     postId: id,
-    content:content.value
+    content: content.value
   });
   if (res?.data.code === 200) {
     await getPostById()
+    content.value = ''
   } else {
     Toast.fail("添加失败")
   }
+
+}
+
+
+/**
+ * 删除评论
+ */
+const doDeleteComment = async (id) => {
+  Dialog.confirm({
+    title: '删除',
+    message:
+        '您确认要删除这条评论吗？',
+    theme: 'round-button',
+  }).then(async () => {
+    const res = await myAxios.post("/post_comment/del", {
+      id,
+    });
+    if (res?.data.code === 200) {
+      await getPostById()
+    } else {
+      Toast.fail("删除失败")
+    }
+  })
 }
 
 </script>
@@ -147,9 +172,9 @@ const doAddComment = async (id) =>{
     </van-cell>
     <van-cell center style="font-size: 19px" :value="post.title"/>
     <van-cell :value="post.content"/>
-    <van-cell  :value="'评论' + post.commentNum"/>
+    <van-cell :value="'评论' + post.commentNum"/>
     <van-row v-for="postComment in postComments" style="margin-left: 10px">
-      <van-col  span="3">
+      <van-col span="3">
         <van-space :size="20">
           <van-image
               title="头像"
@@ -161,38 +186,48 @@ const doAddComment = async (id) =>{
         </van-space>
       </van-col>
       <van-col span="20">
-        <P style="margin-top: 10px; font-size: 12px; color: #1a1a1a">{{ postComment?.commentUser.nickname }}</P>
-        <P style="font-size: 10px;margin-top: 1px; color: #969799">{{ postComment?.createTime }}</P>
-        <van-cell type="text" style="margin: 0px;  font-size: 15px; color: #969799">{{ postComment?.content }}</van-cell>
+        <P style="margin-top: 10px; font-size: 14px; color: #1a1a1a">
+          {{ postComment?.commentUser.nickname }}
+          <!-- 自己的评论内容或者帖子的创建者才有权限删除评论 -->
+          <van-icon @click="doDeleteComment(postComment?.id)" v-if="postComment?.isCanDelete === true || currentUser.id === post.userId" name="delete-o"
+                    style="margin-left: 120px;" size="15px"/>
+        </P>
+        <p type="text" style="margin-top: 10px;  font-size: 14px; color: #1a1a1a">{{
+            postComment?.content
+          }}
+        </p>
+        <P style="font-size: 10px;margin-top: 10px; color: #969799">
+          {{ postComment?.createTime }}
+        </P>
       </van-col>
     </van-row>
 
-  <van-tabbar>
-    <van-field v-model="content" placeholder="评论" type="textarea" autosize/>
-    <van-icon @click="doAddComment(post.id)" name="upgrade" size="30px" style="margin-right: 20px;margin-top: 10px"/>
-    <van-icon v-if="hasFavour === false" @click.stop="doPostFavour(post?.id,)" name="like-o"
-              style="margin-right: 20px; margin-top: 10px">
-      {{ favourNum }}
-    </van-icon>
-    <van-icon v-if="hasFavour === true" @click.stop="doPostFavour(post?.id,)" name="like-o"
-              style="margin-right: 20px; margin-top: 10px" color="#FF88C2">
-      {{ favourNum }}
-    </van-icon>
-    <van-icon v-if="hasThumb === false" @click.stop="doThumb(post?.id,)" name="good-job-o"
-              style="margin-right: 15px; margin-top: 10px">
-      {{ thumbNum }}
-    </van-icon>
-    <van-icon v-if="hasThumb === true" @click.stop="doThumb(post?.id,)" name="good-job-o"
-              style="margin-right: 15px; margin-top: 10px" color="#FF88C2">
-      {{ thumbNum }}
-    </van-icon>
-  </van-tabbar>
+    <van-tabbar>
+      <van-field v-model="content" placeholder="评论" type="textarea" autosize/>
+      <van-icon @click="doAddComment(post.id)" name="upgrade" size="30px" style="margin-right: 20px;margin-top: 10px"/>
+      <van-icon v-if="hasFavour === false" @click.stop="doPostFavour(post?.id,)" name="like-o"
+                style="margin-right: 20px; margin-top: 10px">
+        {{ favourNum }}
+      </van-icon>
+      <van-icon v-if="hasFavour === true" @click.stop="doPostFavour(post?.id,)" name="like-o"
+                style="margin-right: 20px; margin-top: 10px" color="#FF88C2">
+        {{ favourNum }}
+      </van-icon>
+      <van-icon v-if="hasThumb === false" @click.stop="doThumb(post?.id,)" name="good-job-o"
+                style="margin-right: 15px; margin-top: 10px">
+        {{ thumbNum }}
+      </van-icon>
+      <van-icon v-if="hasThumb === true" @click.stop="doThumb(post?.id,)" name="good-job-o"
+                style="margin-right: 15px; margin-top: 10px" color="#FF88C2">
+        {{ thumbNum }}
+      </van-icon>
+    </van-tabbar>
   </template>
 </template>
 
 <style scoped>
-#postComment{
-  --van-card-background-color:#FFFFFF;
+#postComment {
+  --van-card-background-color: #FFFFFF;
   --van-card-thumb-size: 30px;
 
 }
