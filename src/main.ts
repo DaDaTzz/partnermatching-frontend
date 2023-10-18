@@ -4,8 +4,8 @@ import Vant from 'vant';
 import * as VueRouter from 'vue-router';
 import routes from "./config/router.ts";
 import '../global.css'
-import { Field, CellGroup } from 'vant';
-import { Dialog } from 'vant';
+import VueClipboard from "vue-clipboard2";
+import 'vant/lib/index.css'
 
 const app = createApp(App)
 const router = VueRouter.createRouter({
@@ -15,9 +15,8 @@ const router = VueRouter.createRouter({
 })
 app.use(router)
 app.use(Vant)
-app.use(Field);
-app.use(CellGroup);
-app.use(Dialog)
+app.use(VueClipboard)
 app.mount('#app')
+
 
 

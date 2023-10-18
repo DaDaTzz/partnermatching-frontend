@@ -3,6 +3,7 @@ import {useRoute, useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../../services/user.ts";
 import myAxios from "../../plugins/myAxios.ts";
+import {Toast} from "vant";
 
 
 const currentUser = ref();
@@ -34,7 +35,7 @@ const addFollow = async (id) => {
     }
     //alert("操作成功！");
   } else {
-    alert("操作失败，" + res.data.description);
+    Toast.fail("操作失败，" + res.data.description);
   }
 }
 

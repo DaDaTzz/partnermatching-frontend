@@ -4,13 +4,14 @@ import {useRoute, useRouter} from "vue-router";
 import myAxios from "../../plugins/myAxios.ts";
 import routes from "../../config/router.ts";
 import {getCurrentUser} from "../../services/user.ts";
-import {Dialog, Toast} from "vant";
+import {Toast} from "vant";
 
 const router = useRouter()
 
 const route = useRoute();
-const DEFAULT_TITLE = '发布博客'
+const DEFAULT_TITLE = '编辑博客'
 const title = ref(DEFAULT_TITLE);
+
 
 /**
  * 根据路由切换标题
@@ -34,40 +35,32 @@ const onClickRight = () => {
 ---------------------------------------------------
  */
 
-
-const titlee = ref('')
-const content = ref('')
-const fileList = ref([])
+const post = JSON.parse(route.query.post)
+//console.log(post)
+const titlee = ref(post.title)
+const content = ref(post.content)
+const imgs = JSON.parse(post.img)
 
 
 onMounted(() =>{
   getCurrentUser();
 })
 
+/**
+ * 编辑（删除原来的博客，重新创建）
+ */
 const onSubmit = () => {
-  let formData = new FormData();
-  if(fileList.value.length === 0){
-    Toast.fail("先加张图片吧！")
-    return
-  }
-  show.value = true
-  for (let i = 0; i < fileList.value.length; i++) {
-    formData.append('file', fileList.value[i].file)
-  }
-  formData.append('title', titlee.value)
-  formData.append('content', content.value)
-  myAxios.post("/post/add", formData, {
-    headers: {
-      //添加请求头
-      "Content-Type": "multipart/form-data",
-    },
+  myAxios.post("/post/update", {
+    id:post.id,
+    title:titlee.value,
+    content:content.value,
   }).then((res) => {
     show.value = false;
     if (res.data.code == 200) {
-      Toast.success("发布成功")
+      Toast.success("编辑成功")
       router.push('/my/post')
     } else {
-      Toast.fail("发布失败，" + res.data.description);
+      Toast.fail("编辑失败，" + res.data.description);
     }
   });
 
@@ -76,33 +69,14 @@ const onSubmit = () => {
 const show = ref(false)
 
 
-/**
- * 判断文件类型
- * @param file
- */
-const beforeRead = (file) =>{
-  if (file instanceof Array && file.length) {
-    file.forEach(item => {
-      if (item.type !== 'image/jpeg' && item.type !== 'image/png' && item.type !== 'image/jpg') {
-        Toast.fail('请选择正确图片格式上传')
-        return false
-      }
-    })
-    return file
-  } else {
-    if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/jpg') {
-      Toast.fail('请选择正确图片格式上传')
-      return false
-    }
-    return file
-  }
-}
-
-
 </script>
 
 <template>
-
+  <van-swipe class="my-swipe" :autoplay="2000" style="margin-top: 10px">
+    <van-swipe-item v-for="img in imgs" :key="img">
+      <van-image radius="15px" width="90%" height="150px" :src="img"/>
+    </van-swipe-item>
+  </van-swipe>
   <van-nav-bar
       fixed
       id="reset"
@@ -117,7 +91,6 @@ const beforeRead = (file) =>{
   </van-nav-bar>
 
   <div id="portAdd">
-    <van-uploader :before-read="beforeRead" :max-count="5" :max-size="5*1024*1024" :after-read="afterRead" v-model="fileList" multiple/>
     <van-field v-model="titlee" placeholder="请输入标题"/>
     <van-field v-model="content" type="textarea" rows="8" placeholder="请输入正文"/>
   </div>

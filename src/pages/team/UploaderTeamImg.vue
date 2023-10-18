@@ -8,6 +8,7 @@
 import myAxios from "../../plugins/myAxios.ts";
 import {useRoute,useRouter} from "vue-router";
 import {ref} from "vue";
+import {Toast} from "vant";
 
 const route = useRoute()
 const router = useRouter()
@@ -27,8 +28,10 @@ function afterRead(file) {
     },
   }).then((res) => {
     if (res.data.code == 200) {
-      alert("上传成功")
+      Toast.success("上传成功")
       router.push('/user/team/create')
+    }else {
+      Toast.fail("上传失败，" + res.data.message)
     }
   });
 

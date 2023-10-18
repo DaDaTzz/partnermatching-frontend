@@ -2,6 +2,7 @@
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
 import myAxios from "../../plugins/myAxios.ts";
+import {Toast} from "vant";
 
 const searchText = ref('');
 const route = useRoute()
@@ -106,10 +107,10 @@ const doUpdate = async () => {
     tags: activeId.value
   })
   if (res.data.code === 200) {
-    alert("更新成功");
+    Toast.success("更新成功");
     await router.push('/user/update')
   } else {
-    alert("更新失败，" + res.data.description);
+    Toast.fail("更新失败，" + res.data.description);
   }
 }
 </script>

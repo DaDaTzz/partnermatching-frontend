@@ -25,6 +25,7 @@ import UploaderTeamImg from "../pages/team/UploaderTeamImg.vue";
 import UpdatePassword from "../pages/user/updatePassword.vue";
 import MyFavours from "../pages/post/myFavours.vue";
 import bindPhone from "../pages/user/bindPhone.vue";
+import postEdit from "../pages/post/postEdit.vue";
 
 
 const routes = [
@@ -52,9 +53,10 @@ const routes = [
     {path: '/message', title:'消息中心', component: Message},
     {path: '/upload/awata', title:'上传头像', component: UploaderAwata},
     {path: '/post/info', title:'正文', component: PostInfo, meta:{BottomNavShow: false}},
+    {path: '/post/add', title:'发布博客', component: postAdd,meta:{TiJiaoShow:true, SearchShow:false}},
+    {path: '/post/edit', title:'编辑博客', component: postEdit,meta:{TiJiaoShow:true, SearchShow:false}},
     {path: '/my/post', title:'我的博客', component: myPost},
     {path: '/my/favours', title:'我的收藏', component: MyFavours},
-    {path: '/post/add', title:'发布博客', component: postAdd,meta:{TiJiaoShow:true, SearchShow:false}},
 
 
 

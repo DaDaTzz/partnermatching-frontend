@@ -20,10 +20,10 @@ const doLogout = async () => {
   const res = await myAxios.post("/user/logout");
   if (res.data.code === 200) {
     localStorage.setItem("token", '');
-    Toast.success("注销成功");
+    Toast.success("退出成功");
     window.location.reload();
   } else {
-    Toast.fail('注销失败' + (res.data.description ? `，${res.data.description}` : ''));
+    Toast.fail('退出失败' + (res.data.description ? `，${res.data.description}` : ''));
   }
 }
 
@@ -82,7 +82,7 @@ const showVX = () => {
   </van-cell-group>
   <div style="margin: 16px;">
     <van-button @click="doLogout" color="red" style="margin-top: 20px" block round type="primary" native-type="submit">
-      注销
+      退出
     </van-button>
   </div>
 

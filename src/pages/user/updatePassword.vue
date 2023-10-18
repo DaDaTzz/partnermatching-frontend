@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import myAxios from "../../plugins/myAxios.ts";
 import {useRouter} from "vue-router";
+import {Toast} from "vant";
 
 const router = useRouter()
 
@@ -24,10 +25,10 @@ const onSubmit = async () => {
     inputCode:inputCode.value
   })
   if (res.data.code === 200) {
-    alert("修改密码成功");
+    Toast.success("修改密码成功");
     await router.push('/user/login');
   } else {
-    alert("修改密码失败，" + res.data.description);
+    Toast.fail("修改密码失败，" + res.data.description);
   }
 };
 
@@ -41,9 +42,9 @@ const doSendCode = async () => {
     receiveEmail: email.value,
   })
   if (res.data.code === 200) {
-    alert("邮箱验证码发送成功，验证码5分钟内有效！");
+    Toast.success("邮箱验证码发送成功，验证码5分钟内有效！");
   } else {
-    alert("邮箱验证码发送失败，" + res.data.description);
+    Toast.fail("邮箱验证码发送失败，" + res.data.description);
   }
 }
 

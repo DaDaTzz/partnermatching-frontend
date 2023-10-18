@@ -15,6 +15,7 @@
 import {useRoute, useRouter} from "vue-router";
 import myAxios from "../../plugins/myAxios.ts";
 import {ref} from "vue";
+import {Toast} from "vant";
 
 const route = useRoute()
 const router = useRouter()
@@ -35,7 +36,7 @@ function afterRead(file) {
   }).then((res) => {
     show.value = false
     if (res.data.code == 200) {
-      alert("上传成功")
+      Toast.success("上传成功")
       window.location.href = '/user/update'
       //router.push('/user/update')
     }
@@ -51,14 +52,14 @@ const beforeRead = (file) =>{
   if (file instanceof Array && file.length) {
     file.forEach(item => {
       if (item.type !== 'image/jpeg' && item.type !== 'image/png' && item.type !== 'image/jpg') {
-        alert('请选择正确图片格式上传')
+        Toast.fail('请选择正确图片格式上传')
         return false
       }
     })
     return file
   } else {
     if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/jpg') {
-      alert('请选择正确图片格式上传')
+      Toast.fail('请选择正确图片格式上传')
       return false
     }
     return file

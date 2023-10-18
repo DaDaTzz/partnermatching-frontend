@@ -25,10 +25,10 @@ const onSubmit = async () => {
   })
   if (res.data.code === 200 && res.data.data) {
     localStorage.setItem('token', res.data.message)
-    alert("注册成功");
+    Toast.success("注册成功");
     window.location.href = '/user/updateTag';
   } else {
-    alert("注册失败，" + res.data.description);
+    Toast.fail("注册失败，" + res.data.description);
   }
 };
 
@@ -42,9 +42,9 @@ const doSendCode = async () => {
     receiveEmail: email.value,
   })
   if (res.data.code === 200) {
-    alert("邮箱验证码发送成功，验证码5分钟内有效！");
+    Toast.success("邮箱验证码发送成功，验证码5分钟内有效！");
   } else {
-    alert("邮箱验证码发送失败，" + res.data.description);
+    Toast.fail("邮箱验证码发送失败，" + res.data.description);
   }
 }
 
