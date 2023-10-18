@@ -76,21 +76,21 @@ const show = ref(false)
  * 判断文件类型
  * @param file
  */
-const beforeRead = () =>{
-  if (fileList instanceof Array && fileList.length) {
-    for (let i = 0; i < fileList.value.length; i++) {
-      if (fileList.value[i].file.type !== 'image/jpeg' && fileList.value[i].file.type !== 'image/png' && fileList.value[i].file.type !== 'image/jpg') {
+const beforeRead = (file) =>{
+  if (file instanceof Array && file.length) {
+    file.forEach(item => {
+      if (item.type !== 'image/jpeg' && item.type !== 'image/png' && item.type !== 'image/jpg') {
         alert('请选择正确图片格式上传')
         return false
       }
-    }
-    return fileList
+    })
+    return file
   } else {
-    if (fileList.value.file.type !== 'image/jpeg' && fileList.value.file.type !== 'image/png' && fileList.value.file.type !== 'image/jpg') {
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/jpg') {
       alert('请选择正确图片格式上传')
       return false
     }
-    return fileList;
+    return file
   }
 }
 

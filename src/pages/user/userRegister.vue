@@ -7,7 +7,7 @@ const loginAccount = ref('')
 const loginPassword = ref('')
 const checkPassword = ref('')
 const nickname = ref('')
-const phone = ref('')
+const email = ref('')
 const showCodeInput = ref(false)
 const inputCode = ref('')
 
@@ -20,7 +20,7 @@ const onSubmit = async () => {
     loginPassword: loginPassword.value,
     checkPassword: checkPassword.value,
     nickname: nickname.value,
-    phone: phone.value,
+    email: email.value,
     inputCode:inputCode.value
   })
   if (res.data.code === 200 && res.data.data) {
@@ -38,13 +38,13 @@ const onSubmit = async () => {
  */
 const doSendCode = async () => {
   showCodeInput.value = true;
-  const res = await myAxios.post('/user/sendSms', {
-    phone: phone.value,
+  const res = await myAxios.post('/user/sendEmail', {
+    receiveEmail: email.value,
   })
   if (res.data.code === 200) {
-    alert("短信验证码发送成功，验证码5分钟内有效！");
+    alert("邮箱验证码发送成功，验证码5分钟内有效！");
   } else {
-    alert("短信验证码发送失败，" + res.data.description);
+    alert("邮箱验证码发送失败，" + res.data.description);
   }
 }
 
@@ -81,10 +81,10 @@ const doSendCode = async () => {
           :rules="[{ required: true, message: '请确认密码' }]"
       />
       <van-field
-          v-model="phone"
-          name="手机号"
-          label="手机号"
-          :rules="[{ required: true, message: '请填写手机号' }]"
+          v-model="email"
+          name="邮箱"
+          label="邮箱"
+          :rules="[{ required: true, message: '请填写邮箱' }]"
       />
       <van-field
           v-if="showCodeInput"

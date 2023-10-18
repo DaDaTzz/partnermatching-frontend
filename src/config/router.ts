@@ -20,11 +20,11 @@ import postAdd from "../pages/post/postAdd.vue";
 import Message from "../pages/common/Message.vue";
 import fans from "../pages/user/fans.vue";
 import loves from "../pages/post/loves.vue";
-import bindEmail from "../pages/user/bindEmail.vue";
 import UploaderAwata from "../pages/user/UploaderAwata.vue";
 import UploaderTeamImg from "../pages/team/UploaderTeamImg.vue";
 import UpdatePassword from "../pages/user/updatePassword.vue";
 import MyFavours from "../pages/post/myFavours.vue";
+import bindPhone from "../pages/user/bindPhone.vue";
 
 
 const routes = [
@@ -45,7 +45,7 @@ const routes = [
     {path: '/user/loves', title:"我的关注", component: loves},
     {path: '/user/updatePassword', title:"忘记密码", component: UpdatePassword},
     {path: '/user/update', title:'更新信息', component: UserUpdate},
-    {path: '/user/bindEmail', title:'绑定邮箱', component: bindEmail},
+    {path: '/user/bindPhone', title:'绑定手机', component: bindPhone},
     {path: '/user/updateTag', title:'更新标签', component: UpdateTag},
     {path: '/user/team/join', title:'我加入的队伍', component: UserTeamJoin},
     {path: '/user/team/create', title:'我创建的队伍',component: UserTeamCreate},
