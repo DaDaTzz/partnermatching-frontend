@@ -2,7 +2,7 @@ import Index from "../pages/index.vue";
 import Team from "../pages/team/team.vue";
 import User from "../pages/user/user.vue";
 import Search from "../pages/common/search.vue";
-import Edit from "../pages/common/edit.vue";
+import Edit from "../pages/user/edit.vue";
 import SearchResult from "../pages/common/searchResult.vue";
 import UserLogin from "../pages/user/userLogin.vue";
 import teamAdd from "../pages/team/teamAdd.vue";

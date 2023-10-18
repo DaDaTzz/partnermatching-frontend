@@ -126,7 +126,7 @@ const doUpdate = async () => {
     />
   </form>
   <van-divider content-position="left">已选标签</van-divider>
-  <div v-if="activeId.length === 0">请选择标签</div>
+  <div v-if="activeId.length === 0" style="color: red;">标签为空系统将不会为您推荐用户！</div>
   <van-row gutter="16">
     <van-col v-for="tag in activeId">
       <van-tag closeable size="small" type="primary" @close="doClose(tag)">
