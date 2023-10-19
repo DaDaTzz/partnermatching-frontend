@@ -36,7 +36,7 @@ onMounted(async () => {
         console.error('/user/search/tags error', error);
         Toast.fail('请求失败');
       })
-  console.log(userListData)
+  // console.log(userListData)
   if (userListData) {
     userListData.forEach(user => {
       if (user.tags) {

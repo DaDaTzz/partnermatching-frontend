@@ -27,7 +27,7 @@ function afterRead(file) {
   this.headImg = file.file;
   let formData = new FormData();
   formData.append("file", file.file);
-  console.log(formData)
+  // console.log(formData)
   myAxios.post("/img/uploadAwatar", formData, {
     headers: {
       //添加请求头

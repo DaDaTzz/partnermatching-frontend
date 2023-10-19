@@ -24,7 +24,7 @@ onMounted(async () => {
         console.error('/user/get/love error', error);
         Toast.fail('请求失败');
       })
-  console.log(userListData)
+  // console.log(userListData)
   if (userListData) {
     userListData.forEach(user => {
       if (user.tags) {

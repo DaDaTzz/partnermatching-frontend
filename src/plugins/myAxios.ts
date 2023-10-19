@@ -3,8 +3,8 @@ import axios from "axios";
 
 
 const myAxios = axios.create({
-    // baseURL:'http://8.130.133.165:8080/api',
-    baseURL: 'http://localhost:8080/api',
+    baseURL:'http://8.130.133.165:8080/api',
+    // baseURL: 'http://localhost:8080/api',
 });
 
 myAxios.defaults.withCredentials = true;

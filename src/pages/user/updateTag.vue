@@ -8,7 +8,6 @@ const searchText = ref('');
 const route = useRoute()
 
 
-console.log()
 
 
 const originTagList = [

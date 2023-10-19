@@ -3,8 +3,6 @@ import {userType} from "../models/user";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
 import {useRouter} from "vue-router";
-import myAxios from "../plugins/myAxios.ts";
-import {Toast} from "vant";
 
 interface UserCardListProps {
   loading: boolean;
@@ -43,11 +41,11 @@ const userInfo = (user) => {
   <div id="userCardList">
     <van-skeleton title avatar :row="3" :loading="props.loading" v-for="user in props.userList">
       <van-card
+          class="listCard"
           @click="userInfo(user)"
           :desc="user.profile"
           :title="user.nickname"
           :thumb="user.profilePhoto"
-
       >
 
         <template #tags>
@@ -68,7 +66,7 @@ const userInfo = (user) => {
 #userCardList :deep(.van-card__title) {
   font-weight: bold;
   font-size: 14px;
-
 }
+
 
 </style>

@@ -20,7 +20,7 @@ function afterRead(file) {
   let formData = new FormData();
   formData.append("file", file.file);
   formData.append("id",id.value)
-  console.log(formData)
+  // console.log(formData)
   myAxios.post("/img/uploadTeamImg", formData, {
     headers: {
       //添加请求头
