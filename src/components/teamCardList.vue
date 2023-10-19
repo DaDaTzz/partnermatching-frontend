@@ -23,35 +23,35 @@ const props = withDefaults(defineProps<TeamCardListProps>(), {
 })
 
 
-onMounted(async () =>{
+onMounted(async () => {
   currentUser.value = await getCurrentUser();
 })
 
 
 // 加入队伍，跳转至加入队伍页
-const doJoinTeam = async (team: teamType) =>{
-  if(team.states === 2){
+const doJoinTeam = async (team: teamType) => {
+  if (team.states === 2) {
     let password = window.prompt("请输入密码")
     const res = await myAxios.post("/team/join", {
       teamId: team.id,
       password,
     });
-    if(res.data.code === 200){
+    if (res.data.code === 200) {
       Toast.success("加入成功");
       team.password = '';
       window.location.reload();
-    }else {
-      Toast.fail('加入失败' + (res.data.description ? `，${res.data.description}`: ''));
+    } else {
+      Toast.fail('加入失败' + (res.data.description ? `，${res.data.description}` : ''));
     }
-  }else{
+  } else {
     const res = await myAxios.post("/team/join", {
       teamId: team.id,
     });
-    if(res.data.code === 200){
+    if (res.data.code === 200) {
       Toast.success("加入成功");
       window.location.reload();
-    }else {
-      Toast.fail('加入失败' + (res.data.description ? `，${res.data.description}`: ''));
+    } else {
+      Toast.fail('加入失败' + (res.data.description ? `，${res.data.description}` : ''));
     }
   }
 
@@ -64,8 +64,8 @@ const doJoinTeam = async (team: teamType) =>{
  */
 const doUpdateTeam = (id: number) => {
   router.push({
-    path:'/team/update',
-    query:{
+    path: '/team/update',
+    query: {
       id,
     }
   })
@@ -75,29 +75,29 @@ const doUpdateTeam = (id: number) => {
  * 退出队伍
  * @param id
  */
-const doExitTeam = async (id: number) =>{
+const doExitTeam = async (id: number) => {
   const res = await myAxios.post("/team/exit", {
     teamId: id
   });
-  if(res.data.code === 200){
+  if (res.data.code === 200) {
     Toast.success("退出成功");
     window.location.reload();
-  }else {
-    Toast.fail('退出失败' + (res.data.description ? `，${res.data.description}`: ''));
+  } else {
+    Toast.fail('退出失败' + (res.data.description ? `，${res.data.description}` : ''));
   }
 }
 
 // 解散队伍
-const doDisbandTeam = async (id: number, password:string) =>{
+const doDisbandTeam = async (id: number, password: string) => {
   const res = await myAxios.post("/team/disband", {
     teamId: id,
     password,
   });
-  if(res.data.code === 200){
+  if (res.data.code === 200) {
     Toast.success("解散成功");
     window.location.reload();
-  }else {
-    Toast.fail('解散失败' + (res.data.description ? `，${res.data.description}`: ''));
+  } else {
+    Toast.fail('解散失败' + (res.data.description ? `，${res.data.description}` : ''));
   }
 }
 
@@ -105,12 +105,12 @@ const doDisbandTeam = async (id: number, password:string) =>{
  * 跳转队伍详情页
  */
 
-const teamInfo = (id)=>{
+const teamInfo = (id) => {
   // console.log(JSON.stringify(team.createUser))
   // console.log(JSON.stringify(team.joinUsers))
   router.push({
-    path:'/team/info',
-    query:{
+    path: '/team/info',
+    query: {
       //team:JSON.stringify(team),
       id,
     }
@@ -128,12 +128,22 @@ const teamInfo = (id)=>{
         :thumb="team.profilePhoto"
         :desc="team.description"
         :title="team.name"
+        :tag="teamStatesEnum[team.states]"
     >
 
       <template #tags>
-        <van-tag plain type="danger" style="margin-right: 8px; margin-top: 8px">
-          {{ teamStatesEnum[team.states] }}
-        </van-tag>
+<!--        <van-tag plain type="danger" style="margin-right: 8px; margin-top: 8px">-->
+<!--          {{ teamStatesEnum[team.states] }}-->
+<!--        </van-tag>-->
+        <br>
+        <span v-for="joinUser in team.joinUsers" >
+          <van-image
+              round
+              fit="cover"
+              width="30px"
+              height="30px"
+              :src="joinUser.profilePhoto"/>
+        </span>
       </template>
       <template #bottom>
         <div :style="[ team.maxNum === team.hasJoinNum ? { color: 'red' } : { color: '' } ]">
@@ -141,11 +151,19 @@ const teamInfo = (id)=>{
         </div>
 
       </template>
-      <template #footer >
-        <van-button v-if="team.userId !== currentUser?.id && !team.hasJoin" size="small" type="primary" plain @click.stop="doJoinTeam(team)">加入队伍</van-button>
-        <van-button v-if="team.userId === currentUser?.id" size="small"  plain @click.stop="doUpdateTeam(team.id)">更新队伍</van-button>
-        <van-button v-if="team.userId !== currentUser?.id && team.hasJoin" size="small"  plain @click.stop="doExitTeam(team.id)">退出队伍</van-button>
-        <van-button v-if="team.userId === currentUser?.id" size="small"  type="danger" plain @click.stop="doDisbandTeam(team.id)">解散队伍</van-button>
+      <template #footer>
+        <van-button v-if="team.userId !== currentUser?.id && !team.hasJoin" size="small" type="primary" plain
+                    @click.stop="doJoinTeam(team)">加入队伍
+        </van-button>
+        <van-button v-if="team.userId === currentUser?.id" size="small" plain @click.stop="doUpdateTeam(team.id)">
+          更新队伍
+        </van-button>
+        <van-button v-if="team.userId !== currentUser?.id && team.hasJoin" size="small" plain
+                    @click.stop="doExitTeam(team.id)">退出队伍
+        </van-button>
+        <van-button v-if="team.userId === currentUser?.id" size="small" type="danger" plain
+                    @click.stop="doDisbandTeam(team.id)">解散队伍
+        </van-button>
       </template>
     </van-card>
   </div>
@@ -153,8 +171,13 @@ const teamInfo = (id)=>{
 </template>
 
 <style scoped>
-#teamCardList :deep(.van-image__img){
+#teamCardList :deep(.van-image__img) {
   height: 110px;
-  
+
+}
+#teamCardList :deep(.van-card__title) {
+  font-weight: bold;
+  font-size: 14px;
+
 }
 </style>

@@ -16,16 +16,15 @@ const props = withDefaults(defineProps<PortCardListProps>(), {
 })
 
 
-
 /**
  * 跳转到文章详情页
  */
 const portInfo = (id) => {
   router.push({
-    path:'/post/info',
-    query:{
+    path: '/post/info',
+    query: {
       //post:JSON.stringify(post),
-      id:id,
+      id: id,
     }
   })
   //console.log(JSON.stringify(post))
@@ -35,39 +34,45 @@ const portInfo = (id) => {
 </script>
 
 <template>
+  <div id="postCardList">
+    <van-skeleton title avatar :row="3" :loading="props.loading" v-for="post in props.portList">
+      <van-card
+          id="portCard"
+          @click="portInfo(post.id)"
+          :desc="post?.content"
+          :title="post?.title"
+          :thumb="post?.img"
+      >
 
-  <van-skeleton title avatar :row="3" :loading="props.loading" v-for="post in props.portList">
-    <van-card
-        id="portCard"
-        @click="portInfo(post.id)"
-        :desc="post?.content"
-        :title="post?.title"
-        :thumb="post?.img"
-    >
-
-      <template #footer>
-        <van-icon v-if="post?.hasFavour === false" name="like-o"
-                  style="margin-right: 20px">
-          {{ post?.favourNum }}
-        </van-icon>
-        <van-icon v-if="post?.hasFavour === true" name="like-o"
-                  style="margin-right: 20px;" color="#FF88C2">
-          {{ post?.favourNum }}
-        </van-icon>
-        <van-icon v-if="post?.hasThumb === false" name="good-job-o"
-                  style="margin-right: 15px">
-          {{ post?.thumbNum }}
-        </van-icon>
-        <van-icon v-if="post?.hasThumb === true"  name="good-job-o"
-                  style="margin-right: 15px" color="#FF88C2">
-          {{ post?.thumbNum }}
-        </van-icon>
-      </template>
-    </van-card>
-  </van-skeleton>
+        <template #footer>
+          <van-icon v-if="post?.hasFavour === false" name="like-o"
+                    style="margin-right: 20px">
+            {{ post?.favourNum }}
+          </van-icon>
+          <van-icon v-if="post?.hasFavour === true" name="like-o"
+                    style="margin-right: 20px;" color="#FF88C2">
+            {{ post?.favourNum }}
+          </van-icon>
+          <van-icon v-if="post?.hasThumb === false" name="good-job-o"
+                    style="margin-right: 15px">
+            {{ post?.thumbNum }}
+          </van-icon>
+          <van-icon v-if="post?.hasThumb === true" name="good-job-o"
+                    style="margin-right: 15px" color="#FF88C2">
+            {{ post?.thumbNum }}
+          </van-icon>
+        </template>
+      </van-card>
+    </van-skeleton>
+  </div>
 </template>
 
 <style scoped>
+#postCardList :deep(.van-card__title) {
+  font-weight: bold;
+  font-size: 14px;
+
+}
 
 
 </style>

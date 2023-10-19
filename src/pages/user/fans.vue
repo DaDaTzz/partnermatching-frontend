@@ -14,8 +14,8 @@ const userList = ref([])
 onMounted(async () => {
   user.value = await getCurrentUser()
   /**
-* 获取粉丝列表
-  */
+   * 获取粉丝列表
+   */
   const userListData = await myAxios.get('/user/get/fans')
       .then(function (response) {
         //console.log('/user/get/love succeed', response);

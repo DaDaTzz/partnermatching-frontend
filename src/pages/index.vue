@@ -104,6 +104,7 @@ const onSearch = (val) => {
 
 onMounted(() => {
   matchUsers();
+  //currentUser.value = getCurrentUser()
 })
 
 
