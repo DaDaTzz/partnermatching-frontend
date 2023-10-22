@@ -17,7 +17,7 @@ import TeamInfo from "../pages/team/teamInfo.vue";
 import PostInfo from "../pages/post/postInfo.vue";
 import myPost from "../pages/post/myPost.vue";
 import postAdd from "../pages/post/postAdd.vue";
-import Message from "../pages/common/Message.vue";
+import Message from "../pages/message/Message.vue";
 import fans from "../pages/user/fans.vue";
 import loves from "../pages/post/loves.vue";
 import UploaderAwata from "../pages/user/UploaderAwata.vue";
@@ -26,6 +26,8 @@ import UpdatePassword from "../pages/user/updatePassword.vue";
 import MyFavours from "../pages/post/myFavours.vue";
 import bindPhone from "../pages/user/bindPhone.vue";
 import postEdit from "../pages/post/postEdit.vue";
+import Im from "../pages//ChatRoom.vue";
+import ChatRoom from "../pages/message/ChatRoom.vue";
 
 
 const routes = [
@@ -57,6 +59,8 @@ const routes = [
     {path: '/post/edit', title:'编辑博客', component: postEdit,meta:{TiJiaoShow:true, SearchShow:false}},
     {path: '/my/post', title:'我的博客', component: myPost},
     {path: '/my/favours', title:'我的收藏', component: MyFavours},
+    {path: '/message/chatroom', title:'聊天室', component: ChatRoom},
+
 
 
 
