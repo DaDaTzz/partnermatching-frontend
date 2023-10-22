@@ -4,6 +4,8 @@ import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../../services/user.ts";
 import myAxios from "../../plugins/myAxios.ts";
 import {Toast} from "vant";
+import publicLogo from "../../assets/imags/tpic/public.png";
+
 
 const myTeamList = ref([])
 
@@ -17,7 +19,7 @@ onMounted(async () => {
         console.log("获取我的队伍信息，" + error)
         Toast.fail('请求失败');
       })
-  console.log(myTeamListData)
+  //console.log(myTeamListData)
   if (myTeamListData) {
     myTeamList.value = myTeamListData;
   }
@@ -34,9 +36,17 @@ onMounted(async () => {
   </van-grid>
 
 
-  <van-cell title="公共聊天室"   label="组队鸭公共聊天室" to="/message/publicChatroom"/>
+  <van-cell icon="location" title="公共聊天室"   label="组队鸭公共聊天室" to="/message/publicChatroom">
+    <template #right-icon>
+      <van-image :src="publicLogo" style="height: 50px; width: 50px"></van-image>
+    </template>
+  </van-cell>
   <template v-for="team in myTeamList">
-    <van-cell  :title="`${team.name}聊天室`"  :label="team.description" :to="{path:'/message/teamChatRoom/',query:{teamId:team.id}}"/>
+    <van-cell  icon="location-o" :title="`${team.name}聊天室`"  :label="team.description" :to="{path:'/message/teamChatRoom/',query:{teamId:team.id}}">
+      <template #right-icon>
+        <van-image :src="team.profilePhoto" style="height: 50px; width: 50px"></van-image>
+      </template>
+    </van-cell>
   </template>
 
 
