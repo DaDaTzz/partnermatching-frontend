@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
-import {onMounted, ref} from "vue";
+import {nextTick, onMounted, ref} from "vue";
 import {Dialog, Notify, Toast} from "vant";
 import myAxios from "../../plugins/myAxios.ts";
 import {getCurrentUser} from "../../services/user.ts";
@@ -154,11 +154,14 @@ const doAddComment = async (id) => {
   if (res?.data.code === 200) {
     await getPostById()
     content.value = ''
+
   } else {
     Toast.fail("添加失败")
   }
 
 }
+
+const postDiv = ref(null)
 
 
 /**
@@ -251,6 +254,7 @@ const toPostEdit = (post) => {
 
 
   <template v-if="post">
+
     <van-swipe class="my-swipe" :autoplay="2000" style="margin-top: 10px">
       <van-swipe-item v-for="img in imgs" :key="img">
         <van-image radius="15px" width="90%" height="150px" :src="img"/>
@@ -319,6 +323,7 @@ const toPostEdit = (post) => {
         {{ thumbNum }}
       </van-icon>
     </van-tabbar>
+
   </template>
 
   <van-popup round v-model:show="show" position="bottom" :style="{ height: '13%' }">

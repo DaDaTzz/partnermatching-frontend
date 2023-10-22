@@ -39,6 +39,19 @@ const addFollow = async (id) => {
   }
 }
 
+const router = useRouter()
+/**
+ * 跳转到私聊页面
+ */
+const toPrivateRoom = (id) =>{
+  router.push({
+    path:'/message/privateChatroom',
+    query:{
+      toId:id,
+    }
+  })
+}
+
 </script>
 
 <template>
@@ -73,7 +86,7 @@ const addFollow = async (id) => {
                   native-type="submit" style="border-color: #969799; color: #969799">
         已关注
       </van-button>
-      <van-button style="margin-top: 15px" block round plain hairline type="primary" native-type="submit">
+      <van-button @click="toPrivateRoom(user.id)" style="margin-top: 15px" block round plain hairline type="primary" native-type="submit">
         私聊
       </van-button>
 

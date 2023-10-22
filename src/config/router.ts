@@ -27,7 +27,10 @@ import MyFavours from "../pages/post/myFavours.vue";
 import bindPhone from "../pages/user/bindPhone.vue";
 import postEdit from "../pages/post/postEdit.vue";
 import Im from "../pages//ChatRoom.vue";
-import ChatRoom from "../pages/message/ChatRoom.vue";
+import ChatRoom from "../pages/message/PublicChatRoom.vue";
+import PublicChatRoom from "../pages/message/PublicChatRoom.vue";
+import TeamChatRoom from "../pages/message/TeamChatRoom.vue";
+import PrivateChatRoom from "../pages/message/PrivateChatRoom.vue";
 
 
 const routes = [
@@ -59,7 +62,9 @@ const routes = [
     {path: '/post/edit', title:'编辑博客', component: postEdit,meta:{TiJiaoShow:true, SearchShow:false}},
     {path: '/my/post', title:'我的博客', component: myPost},
     {path: '/my/favours', title:'我的收藏', component: MyFavours},
-    {path: '/message/chatroom', title:'聊天室', component: ChatRoom},
+    {path: '/message/publicChatroom', title:'公共聊天室', component: PublicChatRoom,meta:{BottomNavShow: false}},
+    {path: '/message/teamChatroom', title:'队伍聊天室', component: TeamChatRoom,meta:{BottomNavShow: false}},
+    {path: '/message/privateChatroom', title:'私人聊天室', component: PrivateChatRoom,meta:{BottomNavShow: false}},
 
 
 

@@ -34,7 +34,7 @@ const portInfo = (id) => {
 </script>
 
 <template>
-  <div id="postCardList">
+  <div id="postCardList" >
     <van-skeleton title avatar :row="3" :loading="props.loading" v-for="post in props.portList">
       <van-card
           id="portCard"
