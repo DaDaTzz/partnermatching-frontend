@@ -42,7 +42,7 @@ onMounted(async () => {
     </template>
   </van-cell>
   <template v-for="team in myTeamList">
-    <van-cell  icon="location-o" :title="`${team.name}聊天室`"  :label="team.description" :to="{path:'/message/teamChatRoom/',query:{teamId:team.id}}">
+    <van-cell  icon="location-o" :title="`${team.name}队伍聊天室`"  :label="team.description" :to="{path:'/message/teamChatRoom/',query:{teamId:team.id}}">
       <template #right-icon>
         <van-image :src="team.profilePhoto" style="height: 50px; width: 50px"></van-image>
       </template>
