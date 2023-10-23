@@ -47,10 +47,6 @@ const currentUser = ref()
 
 const postId = route.query.id
 const post = ref()
-const favourNum = ref()
-const thumbNum = ref()
-const hasThumb = ref()
-const hasFavour = ref()
 const postComments = ref([])
 const commentUser = ref()
 const imgs = ref([])
@@ -67,10 +63,6 @@ const getPostById = async () => {
   });
   if (res?.data.code === 200) {
     post.value = res?.data.data
-    favourNum.value = post.value.favourNum
-    thumbNum.value = post.value.thumbNum
-    hasThumb.value = post.value.hasThumb
-    hasFavour.value = post.value.hasFavour
     postComments.value = post.value.postCommentUserVOs
     commentUser.value = postComments.value
     imgs.value = JSON.parse(post.value.img)
@@ -95,32 +87,43 @@ const getPostById = async () => {
     Toast.fail("获取失败")
   }
 }
-
+/**
+ * 钩子
+ */
 onMounted(async () => {
   currentUser.value = await getCurrentUser()
-  getPostById()
+  await getPostById()
 })
 
 
 /**
- * 点赞
+ * 文章点赞
  */
 const doThumb = async (id) => {
   const res = await myAxios.post("/post_thumb/", {
     postId: id,
   });
   if (res?.data.code === 200) {
-    if (hasThumb.value === false) {
-      thumbNum.value = (thumbNum.value = parseInt(thumbNum.value) + 1)
-      hasThumb.value = true
-    } else {
-      thumbNum.value = (thumbNum.value = parseInt(thumbNum.value) - 1)
-      hasThumb.value = false
-    }
+    await getPostById()
   } else {
     Toast.fail("点赞失败")
   }
 }
+
+/**
+ * 评论点赞
+ */
+const doCommentThumb = async (id) => {
+  const res = await myAxios.post("/comment_thumb/", {
+    commentId: id,
+  });
+  if (res?.data.code === 200) {
+    await getPostById()
+  }else{
+    Toast.fail("操作异常！")
+  }
+}
+
 
 /**
  * 收藏
@@ -131,13 +134,7 @@ const doPostFavour = async (id) => {
     postId: id,
   });
   if (res?.data.code === 200) {
-    if (hasFavour.value === false) {
-      favourNum.value = (favourNum.value = parseInt(favourNum.value) + 1)
-      hasFavour.value = true
-    } else {
-      favourNum.value = (favourNum.value = parseInt(favourNum.value) - 1)
-      hasFavour.value = false
-    }
+    await getPostById()
   } else {
     Toast.fail("点赞失败")
   }
@@ -160,8 +157,6 @@ const doAddComment = async (id) => {
   }
 
 }
-
-const postDiv = ref(null)
 
 
 /**
@@ -254,7 +249,6 @@ const toPostEdit = (post) => {
 
 
   <template v-if="post">
-
     <van-swipe class="my-swipe" :autoplay="2000" style="margin-top: 10px">
       <van-swipe-item v-for="img in imgs" :key="img">
         <van-image radius="15px" width="90%" height="150px" :src="img"/>
@@ -288,10 +282,26 @@ const toPostEdit = (post) => {
       <van-col span="20">
         <P style="margin-top: 10px;margin-left: 10px; font-size: 14px; color: #1a1a1a">
           {{ postComment?.commentUser.nickname }}
-          <!-- 自己的评论内容或者帖子的创建者才有权限删除评论 -->
-          <van-icon @click="doDeleteComment(postComment?.id,post.userId)"
-                    v-if="postComment?.isCanDelete === true || currentUser.id === post.userId" name="delete-o"
-                    style="margin-left: 120px;" size="15px"/>
+
+            <van-icon v-if="postComment.hasThumb === false" @click="doCommentThumb(postComment?.id)"
+                      name="good-job-o"
+                      style="margin-left: 7px"
+                      size="15px">
+              {{ postComment.thumbNum }}
+            </van-icon>
+          <van-icon v-if="postComment.hasThumb === true" @click="doCommentThumb(postComment?.id)"
+                    name="good-job-o"
+                    style="margin-left: 7px;color: red"
+                    size="15px">
+            {{ postComment.thumbNum }}
+          </van-icon>
+
+            <!-- 自己的评论内容或者帖子的创建者才有权限删除评论 -->
+            <van-icon @click="doDeleteComment(postComment?.id,post.userId)"
+                      v-if="postComment?.isCanDelete === true || currentUser.id === post.userId" name="delete-o"
+                      style="margin-left: 4px"
+                       size="15px"/>
+
         </P>
         <p type="text" style="margin-top: 10px;margin-left: 10px;  font-size: 14px; color: #1a1a1a;">{{
             postComment?.content
@@ -306,21 +316,21 @@ const toPostEdit = (post) => {
     <van-tabbar>
       <van-field v-model="content" placeholder="评论" type="textarea" autosize/>
       <van-icon @click="doAddComment(post.id)" name="upgrade" size="30px" style="margin-right: 20px;margin-top: 10px"/>
-      <van-icon v-if="hasFavour === false" @click.stop="doPostFavour(post?.id,)" name="like-o"
+      <van-icon v-if="post.hasFavour === false" @click.stop="doPostFavour(post?.id,)" name="like-o"
                 style="margin-right: 20px; margin-top: 10px">
-        {{ favourNum }}
+        {{ post.favourNum }}
       </van-icon>
-      <van-icon v-if="hasFavour === true" @click.stop="doPostFavour(post?.id,)" name="like-o"
+      <van-icon v-if="post.hasFavour === true" @click.stop="doPostFavour(post?.id,)" name="like-o"
                 style="margin-right: 20px; margin-top: 10px" color="#FF88C2">
-        {{ favourNum }}
+        {{ post.favourNum }}
       </van-icon>
-      <van-icon v-if="hasThumb === false" @click.stop="doThumb(post?.id,)" name="good-job-o"
+      <van-icon v-if="post.hasThumb === false" @click.stop="doThumb(post?.id,)" name="good-job-o"
                 style="margin-right: 15px; margin-top: 10px">
-        {{ thumbNum }}
+        {{ post.thumbNum }}
       </van-icon>
-      <van-icon v-if="hasThumb === true" @click.stop="doThumb(post?.id,)" name="good-job-o"
+      <van-icon v-if="post.hasThumb === true" @click.stop="doThumb(post?.id,)" name="good-job-o"
                 style="margin-right: 15px; margin-top: 10px" color="#FF88C2">
-        {{ thumbNum }}
+        {{ post.thumbNum }}
       </van-icon>
     </van-tabbar>
 
