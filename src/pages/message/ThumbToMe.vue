@@ -39,7 +39,7 @@ const getLikeMyCommentUser = async () => {
       if (likeMyCommentUserList.value[i].img) {
         let img = JSON.parse(likeMyCommentUserList.value[i].img)
         //console.log(img[0])
-        likeMyCommentUserList.value[i].img = img
+        likeMyCommentUserList.value[i].img = img[0]
       }
     }
   } else {
