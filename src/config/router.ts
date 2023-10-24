@@ -31,6 +31,7 @@ import ChatRoom from "../pages/message/PublicChatRoom.vue";
 import PublicChatRoom from "../pages/message/PublicChatRoom.vue";
 import TeamChatRoom from "../pages/message/TeamChatRoom.vue";
 import PrivateChatRoom from "../pages/message/PrivateChatRoom.vue";
+import ThumbToMe from "../pages/message/ThumbToMe.vue";
 
 
 const routes = [
@@ -49,6 +50,7 @@ const routes = [
     {path: '/user/login', title:"组队鸭", component: UserLogin},
     {path: '/user/fans', title:"我的粉丝", component: fans},
     {path: '/user/loves', title:"我的关注", component: loves},
+    {path: '/user/thumbToMe', title:'赞',component:ThumbToMe},
     {path: '/user/updatePassword', title:"忘记密码", component: UpdatePassword},
     {path: '/user/update', title:'更新信息', component: UserUpdate},
     {path: '/user/bindPhone', title:'绑定手机', component: bindPhone},

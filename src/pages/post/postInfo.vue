@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import {useRoute, useRouter} from "vue-router";
-import {nextTick, onMounted, ref} from "vue";
-import {Dialog, Notify, Toast} from "vant";
+import { onMounted, ref} from "vue";
+import {Dialog,  Toast} from "vant";
 import myAxios from "../../plugins/myAxios.ts";
 import {getCurrentUser} from "../../services/user.ts";
 import routes from "../../config/router.ts";
-import Clipboard from 'clipboard'
 
 const router = useRouter()
 const DEFAULT_TITLE = '正文'

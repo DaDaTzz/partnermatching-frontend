@@ -101,6 +101,7 @@ const onSearch = (val) => {
 
 };
 
+const currentUser = ref()
 
 onMounted(() => {
   matchUsers();
