@@ -104,6 +104,7 @@ const toShoppingMall = () =>{
       <van-grid-item v-if="user?.sign === 1" icon="medal-o" text="签到有礼" @click="doSign"/>
       <van-grid-item v-if="user?.sign === 0" icon="medal-o" text="签到有礼" dot @click="doSign"/>
       <van-grid-item icon="shopping-cart-o"  text="积分商城" @click="toShoppingMall"/>
+      <van-grid-item icon="orders-o"  text="我的订单" @click="我的订单"/>
     </van-grid>
     <van-cell icon="user-circle-o" title="编辑信息" is-link to="/user/update"/>
   </van-cell-group>
