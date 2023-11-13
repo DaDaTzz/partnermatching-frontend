@@ -16,4 +16,6 @@ export type userType = {
     profile?: string;
     createTime: Date;
     type: number;
+    integral:number,
+    sign:number,
 };

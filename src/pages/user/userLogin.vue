@@ -4,6 +4,7 @@ import myAxios from "../../plugins/myAxios.ts";
 import {Toast} from "vant";
 import {useRouter} from "vue-router";
 import logo from "/src/assets/imags/tpic/logo.png"
+import {getCurrentUser} from "../../services/user.ts";
 
 
 const isLoading = ref(false)

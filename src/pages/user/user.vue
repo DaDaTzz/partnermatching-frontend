@@ -41,6 +41,30 @@ const showVX = () => {
   show.value = !show.value;
 }
 
+/**
+ * 每日签到
+ */
+const doSign = async () =>{
+  const res = await myAxios.post("/user/sign",{})
+  if (res.data.code === 200 && res.data.data === true) {
+    user.value = await getCurrentUser()
+    if (user.value.tags) {
+      user.value.tags = JSON.parse(user.value.tags);
+    }
+    Toast.success('签到成功，已获得10积分！');
+
+  } else {
+    Toast.fail('签到失败，' + res.data.description);
+  }
+}
+
+/**
+ * 跳转到积分商城界面
+ */
+const toShoppingMall = () =>{
+  router.push('/user/shoppingMall')
+}
+
 </script>
 
 <template>
@@ -77,6 +101,9 @@ const showVX = () => {
       <van-grid-item icon="flag-o" text="已加入队伍" to="/user/team/join"/>
       <van-grid-item icon="records" text="我的博客" to="/my/post"/>
       <van-grid-item icon="chat-o" text="联系客服" @click="showVX"/>
+      <van-grid-item v-if="user?.sign === 1" icon="medal-o" text="签到有礼" @click="doSign"/>
+      <van-grid-item v-if="user?.sign === 0" icon="medal-o" text="签到有礼" dot @click="doSign"/>
+      <van-grid-item icon="shopping-cart-o"  text="积分商城" @click="toShoppingMall"/>
     </van-grid>
     <van-cell icon="user-circle-o" title="编辑信息" is-link to="/user/update"/>
   </van-cell-group>

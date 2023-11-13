@@ -4,7 +4,8 @@ import axios from "axios";
 
 const myAxios = axios.create({
     // baseURL:'http://8.130.133.165:8080/api',
-    baseURL: 'http://localhost:8080/api',
+    baseURL:'http://www.iyaya.icu:8080/api',
+    // baseURL: 'http://localhost:8080/api',
 
 });
 

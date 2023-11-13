@@ -42,13 +42,15 @@ const toUpdateTag = (currentValue: string) => {
   })
 }
 
-const toBindPhone = (phone) => {
+const toBindPhone = (phone?:string) => {
+  console.log(phone)
   router.push({
     path:'/user/bindPhone',
     query:{
       phone:phone,
     }
   });
+
 }
 
 
@@ -70,8 +72,7 @@ const toBindPhone = (phone) => {
     <van-cell title="账号" is-link :value="user.loginAccount"/>
     <van-cell title="昵称" is-link :value="user.nickname" @click="toEdit('nickname','昵称', user.nickname)"/>
     <van-cell title="性别" is-link :value="user.sex === 1?'男':'女'" @click="toEdit('sex','性别', user.sex)"/>
-    <van-cell title="电话" is-link v-if="user.phone === ''" :value="'未绑定手机'" @click="toBindPhone(user.phone)"/>
-    <van-cell title="电话" is-link  :value="user.phone"/>
+    <van-cell title="电话" is-link :value="user.phone === '' || user.phone === null ? '未绑定手机':user.phone" @click="toBindPhone(user?.phone)"/>
     <van-cell title="邮箱" is-link :value="user.email" />
     <van-cell  title="标签" is-link @click="toUpdateTag(user.tags)">
       <van-tag plain type="danger" v-for="tag in user.tags" style="margin-right: 8px; margin-top: 8px">

@@ -2,7 +2,6 @@
 import {ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import routes from "../config/router.ts";
-import myAxios from "../plugins/myAxios.ts";
 
 const router = useRouter();
 const route = useRoute();
