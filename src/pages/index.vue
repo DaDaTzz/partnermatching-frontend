@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {useRoute} from "vue-router";
-import {onMounted, ref, watchEffect} from "vue";
+import {markRaw, onMounted, ref} from "vue";
 import myAxios from "../plugins/myAxios.ts";
 import {Toast} from "vant";
 import qs from "qs";
@@ -10,6 +10,8 @@ import imag2 from "../assets/imags/tpic/2.jpg";
 import imag3 from "../assets/imags/tpic/3.jpg";
 import imag4 from "../assets/imags/tpic/4.png";
 import PostCardList from "../components/PostCardList.vue";
+import {getCurrentUser} from "../services/user.ts";
+import signImg from "../assets/imags/tpic/sign.png";
 
 
 const images = [imag1, imag2, imag3, imag4];
@@ -25,6 +27,7 @@ const portList = ref([])
 const loading = ref(true)
 
 const searchText = ref('')
+
 
 
 /**
@@ -102,11 +105,28 @@ const onSearch = (val) => {
 };
 
 const currentUser = ref()
+const show = ref(false)
 
-onMounted(() => {
-  matchUsers();
-  //currentUser.value = getCurrentUser()
+onMounted(async () => {
+  await matchUsers();
+  currentUser.value = await getCurrentUser()
+  if(currentUser.value.sign === 0){
+    show.value = !show.value;
+  }
 })
+
+/**
+ * 签到
+ */
+const showSignImg = async () => {
+  const res = await myAxios.post("/user/sign",{})
+  if (res.data.code === 200 && res.data.data === true) {
+    Toast.success('签到成功，获得10积分！');
+  } else {
+    Toast.fail('签到失败，' + res.data.description);
+  }
+  show.value = !show.value;
+}
 
 
 const userOrPort = ref(0)
@@ -126,6 +146,8 @@ const onTabChange = (name) => {
     getPorts(searchText.value)
   }
 }
+
+
 
 
 </script>
@@ -156,6 +178,14 @@ const onTabChange = (name) => {
   </div>
   <van-empty v-if="!userList || userList.length < 1" description="没有更多了"/>
   <van-empty v-if="!portList || portList.length < 1" description="没有更多了"/>
+
+  <van-overlay :show="show">
+    <div class="wrapper" @click.stop>
+      <div class="block" style="text-align: center">
+        <van-image :src="signImg" style="width: 80%" @click="showSignImg"/>
+      </div>
+    </div>
+  </van-overlay>
 </template>
 
 <style scoped>
@@ -165,5 +195,12 @@ const onTabChange = (name) => {
   font-size: 20px;
   line-height: 150px;
   text-align: center;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 </style>

@@ -15,7 +15,7 @@ const getLikeMyCommentUser = async () => {
   const res = await myAxios.get("/post_comment/like/my");
   if (res?.data.code === 200) {
     likeMyCommentUserList.value = res.data.data
-    console.log(likeMyCommentUserList)
+    //console.log(likeMyCommentUserList)
 
     /**
      * 处理时间格式

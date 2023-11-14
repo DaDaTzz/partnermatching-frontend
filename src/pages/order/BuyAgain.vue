@@ -8,11 +8,8 @@ import {ref} from "vue";
 
 const route = useRoute()
 const router = useRouter()
-const number = ref(1)
-const address = ref('')
-const goods = JSON.parse(route.query.goods)
-
-
+const order = JSON.parse(route.query.order)
+const number = ref(order.goodsNumber)
 
 
 const onSubmit = async () => {
@@ -24,13 +21,13 @@ const onSubmit = async () => {
   }
 
   const res = await myAxios.post('/orders/create', {
-    'goodsId': goods.id,
-    'address':address.value,
+    'goodsId': order.goods.id,
+    'address':order.address,
     'goodsNumber':number.value,
   })
   if (res.data.code === 200 && res.data.data === true) {
     Toast.success("下单成功");
-    await router.push('/order/my')
+    router.back();
   } else {
     Toast.fail("下单失败，" + res.data.description                                                                    );
   }
@@ -42,19 +39,19 @@ const onSubmit = async () => {
 <template>
   <van-form @submit="onSubmit">
       <van-field
-          v-model="goods.name"
+          v-model="order.goods.name"
           name="商品名称"
           label="商品名称"
           disabled
       />
     <van-field
-        v-model.number="goods.price"
+        v-model.number="order.goods.price"
         name="消耗积分"
         label="消耗积分"
         disabled
     />
     <van-field
-        v-model="address"
+        v-model="order.address"
         name="收货地址"
         label="收货地址"
     />

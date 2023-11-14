@@ -32,6 +32,8 @@ import PrivateChatRoom from "../pages/message/PrivateChatRoom.vue";
 import ThumbToMe from "../pages/message/ThumbToMe.vue";
 import ShoppingMall from "../pages/user/ShoppingMall.vue";
 import CreateOrder from "../pages/order/CreateOrder.vue";
+import MyOrders from "../pages/order/MyOrders.vue";
+import BuyAgain from "../pages/order/BuyAgain.vue";
 
 
 const routes = [
@@ -69,6 +71,8 @@ const routes = [
     {path: '/message/teamChatroom', title:'队伍聊天室', component: TeamChatRoom,meta:{BottomNavShow: false}},
     {path: '/message/privateChatroom', title:'私人聊天室', component: PrivateChatRoom,meta:{BottomNavShow: false}},
     {path: '/order/create', title:'下单', component:CreateOrder},
+    {path: '/order/my', title:'我的订单', component:MyOrders},
+    {path: '/order/again', title:'下单', component:BuyAgain},
 
 
 

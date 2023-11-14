@@ -5,8 +5,7 @@ import routes from "../config/router.ts";
 
 const router = useRouter();
 const route = useRoute();
-const active = ref();
-const DEFAULT_TITLE = '交友网'
+const DEFAULT_TITLE = '组队鸭'
 const title = ref(DEFAULT_TITLE);
 
 /**
@@ -52,11 +51,11 @@ const onClickRight = () => {
   </div>
 
   <van-tabbar router v-if="route.meta.BottomNavShow !== false">
-    <van-tabbar-item to="/" icon="home-o" name="index" >主页</van-tabbar-item>
-    <van-tabbar-item to="/team" icon="search" name="team" >队伍</van-tabbar-item>
-    <van-tabbar-item to="/post/add" icon="add-o" name="port" >发布</van-tabbar-item>
-    <van-tabbar-item to="/message" icon="smile-comment-o" name="message" >消息</van-tabbar-item>
-    <van-tabbar-item to="/user" icon="user-o" name="user" >个人</van-tabbar-item>
+    <van-tabbar-item to="/" icon="home-o" name="index">主页</van-tabbar-item>
+    <van-tabbar-item to="/team" icon="search" name="team">队伍</van-tabbar-item>
+    <van-tabbar-item to="/post/add" icon="add-o" name="port">发布</van-tabbar-item>
+    <van-tabbar-item to="/message" icon="smile-comment-o" name="message">消息</van-tabbar-item>
+    <van-tabbar-item to="/user" icon="user-o" name="user">个人</van-tabbar-item>
   </van-tabbar>
 
 
