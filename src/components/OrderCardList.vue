@@ -3,6 +3,8 @@ import {portType} from "../models/post";
 import {useRouter} from "vue-router";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
+import myAxios from "../plugins/myAxios.ts";
+import {Toast} from "vant";
 
 const router = useRouter()
 const user = ref()
@@ -46,6 +48,21 @@ const toBuyAgain = (order) => {
   })
 }
 
+
+/**
+ * 退款
+ */
+const doRefund = async (orderId) =>{
+  const res = await myAxios.post('/orders/refund',{
+    orderId:orderId,
+  })
+  if(res.data.code === 200 && res.data.data === true){
+    Toast.success('退款成功！');
+  }else{
+    Toast.fail('退款失败，' + res.data.description);
+  }
+}
+
 </script>
 
 
@@ -67,7 +84,7 @@ const toBuyAgain = (order) => {
           <van-button v-if="order.states === 1" type="default" color="SteelBlue" size="small" @click="toBuyAgain(order)">
             再次购买
           </van-button>
-          <van-button type="default" color="SkyBlue" size="small" @click="申请退款">
+          <van-button type="default" color="SkyBlue" size="small" @click="doRefund(order.id)">
             申请退款
           </van-button>
         </template>
