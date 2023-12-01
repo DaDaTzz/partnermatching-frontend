@@ -25,16 +25,28 @@ onMounted(async () => {
         Toast.fail('请求失败');
       })
   if (goodsListData) {
-    console.log(goodsListData)
+    //console.log(goodsListData)
     goodsList.value = goodsListData.records;
   }
   loading.value = false;
 })
 
+const payIntegral = ref(0)
+
+
+const pay = async () =>{
+  const res = myAxios.get("/alipay/pay?payIntegral=" + payIntegral.value)
+  console.log(res)
+
+
+}
 
 </script>
 
 <template>
+  <div id="paybox"></div>
+  <van-button @click="pay">购买积分</van-button>
+  <van-field v-model="payIntegral"  placeholder="请输入金额" />
   <van-cell title="我的积分" :value="user?.integral"/>
   <goods-card-list :goods-list="goodsList" :loading="loading"></goods-card-list>
   <van-empty v-if="!goodsList || goodsList.length < 1" description="没有更多了"/>

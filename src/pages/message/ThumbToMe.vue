@@ -62,7 +62,7 @@ const router = useRouter()
  * 跳转到博客详情页
  */
 const toPostInfo = (id) => {
-  console.log(id)
+  // console.log(id)
   router.push({
     path: '/post/info',
     query: {

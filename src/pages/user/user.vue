@@ -95,8 +95,6 @@ const toMyOrders = () =>{
         <P style="margin-left: 20px;font-size: 10px; color: #969799">{{user?.profile}}</P>
       </van-col>
     </van-row>
-
-
   </div>
   <van-cell-group>
     <van-cell title="我的标签" is-link :value="user?.tags">

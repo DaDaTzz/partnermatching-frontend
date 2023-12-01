@@ -34,6 +34,7 @@ import ShoppingMall from "../pages/user/ShoppingMall.vue";
 import CreateOrder from "../pages/order/CreateOrder.vue";
 import MyOrders from "../pages/order/MyOrders.vue";
 import BuyAgain from "../pages/order/BuyAgain.vue";
+import OrderInfo from "../pages/order/orderInfo.vue";
 
 
 const routes = [
@@ -73,6 +74,7 @@ const routes = [
     {path: '/order/create', title:'下单', component:CreateOrder},
     {path: '/order/my', title:'我的订单', component:MyOrders},
     {path: '/order/again', title:'下单', component:BuyAgain},
+    {path: '/order/info', title:'订单详情', component:OrderInfo},
 
 
 
