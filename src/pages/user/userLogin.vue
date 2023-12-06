@@ -5,17 +5,26 @@ import {Toast} from "vant";
 import {useRouter} from "vue-router";
 import logo from "/src/assets/imags/tpic/logo.png"
 import {getCurrentUser} from "../../services/user.ts";
+import { Md5 } from 'ts-md5';
 
 
 const isLoading = ref(false)
 
+// 盐值
+const SALT = "Da";
+
 const loginAccount = ref('');
 const loginPassword = ref('');
 const onSubmit = async () => {
+  const safePassword = ref('');
   isLoading.value = true;
+  const md5:any = new Md5()
+  md5.appendAsciiStr(SALT + loginPassword.value)
+  safePassword.value = md5.end()
+  console.log("safe password:" + safePassword.value)
   const res = await myAxios.post('/user/login', {
     loginAccount: loginAccount.value,
-    loginPassword: loginPassword.value,
+    loginPassword: safePassword.value,
   })
   if (res.data.code === 200 && res.data.data) {
     localStorage.setItem('token', res.data.message)

@@ -2,6 +2,7 @@
 import {ref} from "vue";
 import myAxios from "../../plugins/myAxios.ts";
 import {Toast} from "vant";
+import {Md5} from "ts-md5";
 
 const loginAccount = ref('')
 const loginPassword = ref('')
@@ -11,14 +12,25 @@ const email = ref('')
 const showCodeInput = ref(false)
 const inputCode = ref('')
 
+const SALT = 'Da';
+
 /**
  * 用户注册
  */
 const onSubmit = async () => {
+  const safePassword = ref('')
+  const checkSafePassword = ref('')
+  const md5:any = new Md5()
+  md5.appendAsciiStr(SALT + loginPassword.value)
+  safePassword.value = md5.end()
+  const md52:any = new Md5()
+  md52.appendAsciiStr(SALT + checkPassword.value)
+  checkSafePassword.value = md52.end()
+  //console.log("safe password:" + safePassword.value)
   const res = await myAxios.post('/user/register', {
     loginAccount: loginAccount.value,
-    loginPassword: loginPassword.value,
-    checkPassword: checkPassword.value,
+    loginPassword: safePassword.value,
+    checkPassword: checkSafePassword.value,
     nickname: nickname.value,
     email: email.value,
     inputCode:inputCode.value
