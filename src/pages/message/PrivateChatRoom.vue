@@ -142,7 +142,7 @@ const sendMessage = async () => {
 
 
   <template v-for="om in oldMessage">
-    <van-row style="margin-left: 10px">
+    <van-row style="margin-left: 10px" v-if="om.userId !== currentUser.id">
       <van-col span="3">
         <van-space :size="20">
           <van-image
@@ -164,11 +164,33 @@ const sendMessage = async () => {
         </p>
       </van-col>
     </van-row>
+    <van-row style="margin-left: 400px" v-if="om.userId === currentUser.id">
+      <van-col span="20">
+        <P style="margin-top: 10px;margin-left: 10px; font-size: 12px; color: #1a1a1a">
+          {{ om.nickname }}
+        </P>
+        <p type="text" style="margin-top: 10px;margin-left: 10px;  font-size: 13px; color: #969799">{{
+            om?.message
+          }}
+        </p>
+      </van-col>
+      <van-col span="3">
+        <van-space :size="20">
+          <van-image
+              title="头像"
+              round
+              fit="cover"
+              width="3rem"
+              height="3rem"
+              :src="om.profilePhoto"/>
+        </van-space>
+      </van-col>
+    </van-row>
   </template>
 
   <template v-for="um in userMessage">
     <div class="context" ref="left-main">
-      <van-row style="margin-left: 10px">
+      <van-row style="margin-left: 10px" v-if="um.userId !== currentUser.id">
         <van-col span="3">
           <van-space :size="20">
             <van-image
@@ -188,6 +210,28 @@ const sendMessage = async () => {
               um?.message
             }}
           </p>
+        </van-col>
+      </van-row>
+      <van-row style="margin-left: 400px" v-if="um.userId === currentUser.id">
+        <van-col span="20">
+          <P style="margin-top: 10px;margin-left: 10px; font-size: 12px; color: #1a1a1a">
+            {{ um.nickname }}
+          </P>
+          <p type="text" style="margin-top: 10px;margin-left: 10px;  font-size: 13px; color: #969799">{{
+              um?.message
+            }}
+          </p>
+        </van-col>
+        <van-col span="3">
+          <van-space :size="20">
+            <van-image
+                title="头像"
+                round
+                fit="cover"
+                width="3rem"
+                height="3rem"
+                :src="um.profilePhoto"/>
+          </van-space>
         </van-col>
       </van-row>
     </div>
