@@ -35,7 +35,8 @@ import CreateOrder from "../pages/order/CreateOrder.vue";
 import MyOrders from "../pages/order/MyOrders.vue";
 import BuyAgain from "../pages/order/BuyAgain.vue";
 import OrderInfo from "../pages/order/orderInfo.vue";
-import Trends from "../pages/user/trends.vue";
+import Trends from "../pages/trends/trends.vue";
+import TrendsAdd from "../pages/trends/trendsAdd.vue";
 
 
 const routes = [
@@ -56,7 +57,6 @@ const routes = [
     {path: '/user/loves', title:"我的关注", component: loves},
     {path: '/user/shoppingMall', title:"积分商城", component: ShoppingMall},
     {path: '/user/thumbToMe', title:'赞',component:ThumbToMe},
-    {path: '/user/trends', title:'朋友圈',component:Trends},
     {path: '/user/updatePassword', title:"忘记密码", component: UpdatePassword},
     {path: '/user/update', title:'更新信息', component: UserUpdate},
     {path: '/user/bindPhone', title:'绑定手机', component: bindPhone},
@@ -77,6 +77,10 @@ const routes = [
     {path: '/order/my', title:'我的订单', component:MyOrders},
     {path: '/order/again', title:'下单', component:BuyAgain},
     {path: '/order/info', title:'订单详情', component:OrderInfo},
+    {path: '/trends/info', title:'朋友圈',component:Trends},
+    {path: '/trends/add', title:'发布动态',component: TrendsAdd,meta:{FaBuShow:true, SearchShow:false}},
+
+
 
 
 

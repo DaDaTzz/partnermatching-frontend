@@ -1,10 +1,25 @@
 <script setup lang="ts">
 import {onMounted, ref} from "vue";
 import myAxios from "../../plugins/myAxios.ts";
+import myAxiosTwo from "../../plugins/myAxiosTwo.ts";
 
 const trends = ref()
 
+const backgroundImage = ref('')
+
+const imgs = ref([])
+
 onMounted(async () => {
+  /**
+   * 随机背景图
+   */
+  const result = await myAxiosTwo.get('https://api.btstu.cn/sjbz/api.php?lx=suiji&format=json&method=pc')
+  if (result.data.code === "200" && result.data.imgurl) {
+    //console.log(result.data.imgurl)
+    backgroundImage.value = result.data.imgurl
+  }
+
+
   /**
    * 获取自己以及关注的用户的朋友圈
    */
@@ -12,9 +27,8 @@ onMounted(async () => {
   if (res?.data.code === 200) {
     trends.value = res?.data.data;
   }
-
   /**
-   * 处理时间格式
+   * 处理时间格式以及转换图片 JSON url数组
    */
   for (let i = 0; i < trends.value.length; i++) {
     if (trends.value[i].createTime) {
@@ -28,18 +42,21 @@ onMounted(async () => {
       //console.log(year+"-"+month+"-"+day+" "+hours+":"+minutes+":"+seconds)
       trends.value[i].createTime = year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
     }
+    if(trends.value[i].img){
+      trends.value[i].img = JSON.parse(trends.value[i].img)
+      console.log(trends.value[i].img)
+    }
   }
+
+
 })
-
-
-
 
 
 </script>
 
 <template>
   <van-image
-      src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2Febb1b35e-b314-4c2c-bb45-d794da09c56d%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1706158378&t=cdfabc2ce5d4b42333203b62b81eda1c"
+      :src=backgroundImage
   />
 
   <br>
@@ -61,14 +78,18 @@ onMounted(async () => {
       </van-col>
       <van-col span="18">
         <P style="margin-left: 0px;font-size: 15px; color: #38b9fa">{{ t?.nickname }}</P>
-        <P style="margin-left: 0px;font-size: 15px; color: black">{{t?.content}}</P>
+        <P style="margin-left: 0px;font-size: 15px; color: black">{{ t?.content }}</P>
+        <van-row>
+          <van-col span="4" v-for="img in t.img">
+            <van-image :src="img" style="width: 50px; height: 50px"/>
+          </van-col>
+        </van-row>
         <P style="margin-left: 0px;font-size: 9px; color: #808080">{{ t?.createTime }}</P>
       </van-col>
     </van-row>
-    <van-divider />
+    <van-divider/>
 
   </div>
-
 
 
 </template>

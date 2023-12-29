@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import myAxios from "../../plugins/myAxios.ts";
 import {Toast} from "vant";
 import {useRouter} from "vue-router";
 import logo from "/src/assets/imags/tpic/logo.png"
-import {getCurrentUser} from "../../services/user.ts";
 import { Md5 } from 'ts-md5';
+import myAxiosTwo from "../../plugins/myAxiosTwo.ts";
 
 
 const isLoading = ref(false)
@@ -44,9 +44,25 @@ const toUpdatePassword = () => {
   router.push('/user/updatePassword')
 }
 
+const chickenSoup = ref('每日毒鸡汤：')
+
+onMounted(async () =>{
+  const result = await myAxiosTwo.get('https://api.btstu.cn/yan/api.php?charset=utf-8&encode=json')
+  if(result.data.text){
+    chickenSoup.value += result.data.text
+  }
+})
+
+
 </script>
 
 <template>
+  <van-notice-bar
+      background="#d5ecf3"
+      color="#1989fa"
+      left-icon="volume-o"
+      :text=chickenSoup
+  />
   <div id="login-page" style="text-align: center">
     <van-image :src="logo" style="width: 45%; height: 45%"/>
     <van-form @submit="onSubmit">
