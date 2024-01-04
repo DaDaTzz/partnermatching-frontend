@@ -9,7 +9,7 @@ import {Toast} from "vant";
 const router = useRouter();
 
 /**
- * 跳转到加入队伍页面
+ * 跳转到添加队伍页面
  */
 const toAddTeam = () => {
   router.push({

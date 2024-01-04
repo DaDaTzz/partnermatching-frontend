@@ -2,12 +2,43 @@
 import {onMounted, ref} from "vue";
 import myAxios from "../../plugins/myAxios.ts";
 import myAxiosTwo from "../../plugins/myAxiosTwo.ts";
+import {useRoute, useRouter} from "vue-router";
+import routes from "../../config/router.ts";
+
+const router = useRouter()
+
+const route = useRoute();
+const DEFAULT_TITLE = '朋友圈'
+const title = ref(DEFAULT_TITLE);
+
+/**
+ * 根据路由切换标题
+ */
+router.beforeEach((to, from) => {
+  const toPath = to.path;
+  const route = routes.find((route) => {
+    return toPath == route.path
+  })
+  title.value = route?.title ?? DEFAULT_TITLE;
+})
+
+const onClickLeft = () => {
+  router.back();
+};
+const onClickRight = () => {
+  router.push('/search');
+};
+
+/*
+--------------------------------------------
+ */
+
+
 
 const trends = ref()
 
 const backgroundImage = ref('')
 
-const imgs = ref([])
 
 onMounted(async () => {
   /**
@@ -47,14 +78,34 @@ onMounted(async () => {
       console.log(trends.value[i].img)
     }
   }
-
-
 })
+
+/**
+ * 跳转到发布朋友圈页面
+ */
+const onSubmit = () =>{
+  router.push('/trends/add')
+}
 
 
 </script>
 
 <template>
+  <van-nav-bar
+      fixed
+      id="reset"
+      :title="title"
+      left-arrow
+      @click-left="onClickLeft"
+      @click-right="onClickRight"
+  >
+    <template #right>
+      <p v-if="route.meta.FaBuShow" @click.stop="onSubmit">发布</p>
+    </template>
+  </van-nav-bar>
+
+
+
   <van-image
       :src=backgroundImage
   />

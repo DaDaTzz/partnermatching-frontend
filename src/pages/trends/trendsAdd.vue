@@ -110,7 +110,7 @@ const beforeRead = (file) => {
       @click-right="onClickRight"
   >
     <template #right>
-      <p v-if="route.meta.FaBuShow" @click.stop="onSubmit">发布</p>
+      <p v-if="route.meta.FaBuShow" @click.stop="onSubmit">提交</p>
     </template>
   </van-nav-bar>
 

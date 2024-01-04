@@ -100,7 +100,7 @@ const toUploadTeamImg = (id) => {
     <van-cell icon="flag-o" title="队伍名" is-link :value="team.name"/>
     <van-cell icon="label-o" title="队伍描述" is-link :value="team.description"/>
     <van-cell icon="manager-o" title="队长" is-link :value="team.createUser.nickname"/>
-    <van-cell icon="shield-o" title="队伍状态" is-link :value="team.states === '0' ? '公开':'加密'"/>
+    <van-cell icon="shield-o" title="队伍状态" is-link :value="team.states === 0 ? '公开':'加密'"/>
     <van-cell icon="friends-o" title="队伍人数" is-link :value="team.hasJoinNum + '/' + team.maxNum">
     </van-cell>
     <van-cell icon="clock-o" title="过期时间" is-link :value="team.expireTime === null ? '永不过期' : team.expireTime"/>

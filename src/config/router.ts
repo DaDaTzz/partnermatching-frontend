@@ -68,7 +68,7 @@ const routes = [
     {path: '/post/info', title:'正文', component: PostInfo, meta:{BottomNavShow: false}},
     {path: '/post/add', title:'发布博客', component: postAdd,meta:{TiJiaoShow:true, SearchShow:false}},
     {path: '/post/edit', title:'编辑博客', component: postEdit,meta:{TiJiaoShow:true, SearchShow:false}},
-    {path: '/my/post', title:'我的博客', component: myPost},
+    {path: '/my/post', title:'我的博客', component: myPost,meta:{ChuangJianShow:true, SearchShow:false}},
     {path: '/my/favours', title:'我的收藏', component: MyFavours},
     {path: '/message/publicChatroom', title:'公共聊天室', component: PublicChatRoom,meta:{BottomNavShow: false}},
     {path: '/message/teamChatroom', title:'队伍聊天室', component: TeamChatRoom,meta:{BottomNavShow: false}},
@@ -77,7 +77,7 @@ const routes = [
     {path: '/order/my', title:'我的订单', component:MyOrders},
     {path: '/order/again', title:'下单', component:BuyAgain},
     {path: '/order/info', title:'订单详情', component:OrderInfo},
-    {path: '/trends/info', title:'朋友圈',component:Trends},
+    {path: '/trends/info', title:'朋友圈',component:Trends,meta:{FaBuShow:true, SearchShow:false}},
     {path: '/trends/add', title:'发布动态',component: TrendsAdd,meta:{FaBuShow:true, SearchShow:false}},
 
 

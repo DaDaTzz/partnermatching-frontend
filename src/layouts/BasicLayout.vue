@@ -55,14 +55,13 @@ const onClickRight = () => {
   <van-tabbar router v-if="route.meta.BottomNavShow !== false">
     <van-tabbar-item to="/" icon="home-o" name="index">主页</van-tabbar-item>
     <van-tabbar-item to="/team" icon="search" name="team">队伍</van-tabbar-item>
-    <van-tabbar-item to="/post/add" icon="add-o" name="port">发布</van-tabbar-item>
     <van-tabbar-item to="/trends/info" icon="fire-o" name="port">朋友圈</van-tabbar-item>
     <van-tabbar-item to="/message" icon="smile-comment-o" name="message">消息</van-tabbar-item>
     <van-tabbar-item to="/user" icon="user-o" name="user">个人</van-tabbar-item>
   </van-tabbar>
-
-
 </template>
+
+
 
 <style scoped>
 #content {

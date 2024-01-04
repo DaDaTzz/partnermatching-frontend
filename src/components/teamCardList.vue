@@ -2,7 +2,7 @@
 import {teamType} from "../models/team";
 import {teamStatesEnum} from "../constants/team.ts";
 import myAxios from "../plugins/myAxios.ts";
-import {Toast} from "vant";
+import {Dialog, Toast} from "vant";
 import {onMounted, ref} from "vue";
 import {getCurrentUser} from "../services/user.ts";
 import {useRouter} from "vue-router";
@@ -39,7 +39,7 @@ const doJoinTeam = async (team: teamType) => {
     if (res.data.code === 200) {
       Toast.success("加入成功");
       team.password = '';
-      window.location.reload();
+      await router.push('/user/team/join')
     } else {
       Toast.fail('加入失败' + (res.data.description ? `，${res.data.description}` : ''));
     }
@@ -49,7 +49,7 @@ const doJoinTeam = async (team: teamType) => {
     });
     if (res.data.code === 200) {
       Toast.success("加入成功");
-      window.location.reload();
+      await router.push('/user/team/join')
     } else {
       Toast.fail('加入失败' + (res.data.description ? `，${res.data.description}` : ''));
     }
@@ -75,30 +75,45 @@ const doUpdateTeam = (id: number) => {
  * 退出队伍
  * @param id
  */
-const doExitTeam = async (id: number) => {
-  const res = await myAxios.post("/team/exit", {
-    teamId: id
-  });
-  if (res.data.code === 200) {
-    Toast.success("退出成功");
-    window.location.reload();
-  } else {
-    Toast.fail('退出失败' + (res.data.description ? `，${res.data.description}` : ''));
-  }
+const doExitTeam = async (id: number, name: string) => {
+  await Dialog.confirm({
+    title: '确认退出',
+    message:
+        '您确定要退出' + name + '?',
+  })
+      .then(async () => {
+        // on confirm
+        const res = await myAxios.post("/team/exit", {
+          teamId: id
+        });
+        if (res.data.code === 200) {
+          Toast.success("退出成功");
+          window.location.reload();
+        } else {
+          Toast.fail('退出失败' + (res.data.description ? `，${res.data.description}` : ''));
+        }
+      })
 }
 
 // 解散队伍
-const doDisbandTeam = async (id: number, password: string) => {
-  const res = await myAxios.post("/team/disband", {
-    teamId: id,
-    password,
-  });
-  if (res.data.code === 200) {
-    Toast.success("解散成功");
-    window.location.reload();
-  } else {
-    Toast.fail('解散失败' + (res.data.description ? `，${res.data.description}` : ''));
-  }
+const doDisbandTeam = async (id: number, name:string) => {
+  await Dialog.confirm({
+    title: '确认解散',
+    message:
+        '您确定要解散' + name + '?',
+  })
+      .then(async () => {
+        // on confirm
+        const res = await myAxios.post("/team/disband", {
+          teamId: id,
+        });
+        if (res.data.code === 200) {
+          Toast.success("解散成功");
+          window.location.reload();
+        } else {
+          Toast.fail('解散失败' + (res.data.description ? `，${res.data.description}` : ''));
+        }
+      })
 }
 
 /**
@@ -132,11 +147,11 @@ const teamInfo = (id) => {
     >
 
       <template #tags>
-<!--        <van-tag plain type="danger" style="margin-right: 8px; margin-top: 8px">-->
-<!--          {{ teamStatesEnum[team.states] }}-->
-<!--        </van-tag>-->
+        <!--        <van-tag plain type="danger" style="margin-right: 8px; margin-top: 8px">-->
+        <!--          {{ teamStatesEnum[team.states] }}-->
+        <!--        </van-tag>-->
         <br>
-        <span v-for="joinUser in team.joinUsers" >
+        <span v-for="joinUser in team.joinUsers">
           <van-image
               round
               fit="cover"
@@ -159,10 +174,10 @@ const teamInfo = (id) => {
           更新队伍
         </van-button>
         <van-button v-if="team.userId !== currentUser?.id && team.hasJoin" size="small" plain
-                    @click.stop="doExitTeam(team.id)">退出队伍
+                    @click.stop="doExitTeam(team.id,team.name)">退出队伍
         </van-button>
         <van-button v-if="team.userId === currentUser?.id" size="small" type="danger" plain
-                    @click.stop="doDisbandTeam(team.id)">解散队伍
+                    @click.stop="doDisbandTeam(team.id,team.name)">解散队伍
         </van-button>
       </template>
     </van-card>
@@ -175,6 +190,7 @@ const teamInfo = (id) => {
   height: 110px;
 
 }
+
 #teamCardList :deep(.van-card__title) {
   font-weight: bold;
   font-size: 14px;
