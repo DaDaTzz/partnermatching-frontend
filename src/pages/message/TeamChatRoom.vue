@@ -246,4 +246,8 @@ const sendMessage = async () => {
 
 <style scoped>
 
+#reset /deep/ .van-ellipsis {
+  font-weight: bold;
+}
+
 </style>

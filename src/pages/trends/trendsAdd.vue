@@ -144,4 +144,8 @@ const beforeRead = (file) => {
   width: 120px;
   height: 120px;
 }
+
+#reset /deep/ .van-ellipsis {
+  font-weight: bold;
+}
 </style>

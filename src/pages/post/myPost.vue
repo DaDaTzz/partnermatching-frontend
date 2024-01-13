@@ -115,4 +115,8 @@ const onSubmit = () =>{
 
 <style scoped>
 
+#reset /deep/ .van-ellipsis {
+  font-weight: bold;
+}
+
 </style>

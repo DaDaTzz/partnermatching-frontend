@@ -360,4 +360,8 @@ const toPostEdit = (post) => {
   text-align: center;
 }
 
+#reset /deep/ .van-ellipsis {
+  font-weight: bold;
+}
+
 </style>

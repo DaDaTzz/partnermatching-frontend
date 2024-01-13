@@ -116,7 +116,7 @@ const toMyOrders = () =>{
   </van-cell-group>
   <div style="margin: 16px;">
     <van-button @click="doLogout" color="red" style="margin-top: 20px" block round type="primary" native-type="submit">
-      退出
+      注销
     </van-button>
   </div>
 

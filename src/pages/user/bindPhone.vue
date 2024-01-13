@@ -52,6 +52,7 @@ const doSendEmail = async () => {
   <van-field v-if="showCodeInput" v-model="inputCode" label="验证码" placeholder="请输入验证码"/>
   <van-button   plain @click="doSendEmail" type="primary">发送验证码</van-button>
   <van-button v-if="showCodeInput" round block type="primary" @click="onSubmit">提交</van-button>
+
 </template>
 
 <style scoped>
